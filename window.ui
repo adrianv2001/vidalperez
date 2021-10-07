@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>306</width>
-    <height>325</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>IMPORT - EXPORT TEIS</string>
@@ -20,8 +25,8 @@
    <widget class="QLabel" name="lblClientes">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>30</y>
+      <x>250</x>
+      <y>0</y>
       <width>181</width>
       <height>31</height>
      </rect>
@@ -42,7 +47,7 @@
     <property name="styleSheet">
      <string notr="true">QLabel{
 color:'white';
-background-color:blue;
+background-color:#0000ff;
 border: 3px solid white;
 align: center;
 
@@ -52,37 +57,19 @@ align: center;
      <string>Gestión Clientes</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblDNI">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>110</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>DNI</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txtDni">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>110</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="lblValidoDNI">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>110</y>
-      <width>47</width>
+      <x>239</x>
+      <y>39</y>
+      <width>31</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -91,8 +78,8 @@ align: center;
    <widget class="QPushButton" name="btnAceptar">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>240</y>
+      <x>30</x>
+      <y>540</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -104,8 +91,8 @@ align: center;
    <widget class="QPushButton" name="btnSalir">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>240</y>
+      <x>670</x>
+      <y>540</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -113,11 +100,99 @@ align: center;
     <property name="font">
      <font>
       <family>Arial</family>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Salir</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>29</x>
+      <y>79</y>
+      <width>476</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="lblApel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Apellidos</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtApel">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblNome">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Nombre</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtNome">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>203</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="lblDNI">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>DNI</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txtDni">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -125,8 +200,8 @@ align: center;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>306</width>
-     <height>21</height>
+     <width>800</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">

@@ -27,6 +27,9 @@ class Clientes():
                 else:
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
                     var.ui.lblValidoDNI.setText('X')
+            else:
+                var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
+                var.ui.lblValidoDNI.setText('X')
 
 
 
