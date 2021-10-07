@@ -65,7 +65,7 @@ align: center;
      <string>DNI</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="txtDatos">
+   <widget class="QLineEdit" name="txtDni">
     <property name="geometry">
      <rect>
       <x>90</x>

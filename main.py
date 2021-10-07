@@ -1,6 +1,7 @@
 # This is a sample Python script.
 import sys,var
 
+import clients
 import events
 from window import *
 # Press Mayús+F10 to execute it or replace it with your code.
@@ -28,6 +29,11 @@ class Main(QtWidgets.QMainWindow):
         Eventos de la barra de menus
         '''
         var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
+
+        '''
+        Eventos caja de texto
+        '''
+        var.ui.txtDni.editingFinished.connect(clients.Clientes.validarDNI)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
