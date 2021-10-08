@@ -34,6 +34,8 @@ class Main(QtWidgets.QMainWindow):
         Eventos caja de texto
         '''
         var.ui.txtDni.editingFinished.connect(clients.Clientes.validarDNI)
+        var.ui.rbtGroupSex.buttonClicked.connect(clients.Clientes.selSexo)
+        var.ui.chkGroupPago.buttonClicked.connect(clients.Clientes.selPago)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
