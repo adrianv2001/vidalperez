@@ -7,6 +7,8 @@ from window import *
 # Press Mayús+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from windowaviso import *
+from windowcal import *
+from datetime import *
 
 
 class DialogAviso(QtWidgets.QDialog):
@@ -14,6 +16,18 @@ class DialogAviso(QtWidgets.QDialog):
         super(DialogAviso, self).__init__()
         var.dlgaviso = Ui_Aviso()
         var.dlgaviso.setupUi(self)
+
+
+class DialogCalendar(QtWidgets.QDialog):
+    def __init__(self):
+        super(DialogCalendar, self).__init__()
+        var.dlgcalendar = Ui_windowcal()
+        var.dlgcalendar.setupUi(self)
+        diaactual = datetime.now().day
+        mesactual = datetime.now().month
+        anoactual = datetime.now().year
+        var.dlgcalendar.calendar.setSelectedDate((QtCore.QDate(anoactual,mesactual,diaactual)))
+        var.dlgcalendar.calendar.clicked.connect(clients.Clientes.cargarFecha)
 
 
 class Main(QtWidgets.QMainWindow):
@@ -25,6 +39,8 @@ class Main(QtWidgets.QMainWindow):
         Eventos de boton
         '''
         var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
+
+        var.ui.btnCalendar.clicked.connect(events.Eventos.abrircal)
         '''
         Eventos de la barra de menus
         '''
@@ -36,11 +52,25 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtDni.editingFinished.connect(clients.Clientes.validarDNI)
         var.ui.rbtGroupSex.buttonClicked.connect(clients.Clientes.selSexo)
         var.ui.chkGroupPago.buttonClicked.connect(clients.Clientes.selPago)
+        var.ui.txtApel.editingFinished.connect(clients.Clientes.letracapital)
+        var.ui.txtNome.editingFinished.connect(clients.Clientes.letracapital)
+        var.ui.txtDir.editingFinished.connect(clients.Clientes.letracapital)
+
+
+        '''
+        Eventos de ComboBox
+        '''
+        clients.Clientes.cargaProv_(self)
+        var.ui.cmbProv.activated[str].connect(clients.Clientes.selProv)
+        clients.Clientes.cargaMun_(self)
+        var.ui.cmbMun.activated[str].connect(clients.Clientes.selMun)
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
     window = Main()
     var.dlgaviso = DialogAviso()
+    var.dlgcalendar = DialogCalendar()
     window.show()
     sys.exit(app.exec())
 

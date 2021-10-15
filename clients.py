@@ -62,3 +62,56 @@ class Clientes():
                 print('Has seleccionado Transferencia Bancaria')
         except Exception as error:
             print('Error en modulo seleccionar Pago, ', error)
+
+    def cargaProv_(self):
+        try:
+            var.ui.cmbProv.clear()
+            prov = ['','A Coruña','Lugo','Pontevedra','Ourense']
+            for i in prov:
+                var.ui.cmbProv.addItem(i)
+        except Exception as error:
+            print('Error en módulo cargar provincias',error)
+    def selProv(prov):
+        try:
+
+            print('Has seleccionado la provincia de ', prov)
+            return prov
+        except Exception as error:
+            print('Error en seleccion de provincia', error)
+
+    def cargaMun_(self):
+        try:
+            var.ui.cmbMun.clear()
+            mun = ['','Salvaterra de Miño','As Neves','Ponteareas','Salceda de Caselas']
+            for i in mun:
+                var.ui.cmbMun.addItem(i)
+        except Exception as error:
+            print('Error en módulo cargar municipios',error)
+    def selMun(mun):
+        try:
+
+            print('Has seleccionado el municipio de ', mun)
+            return mun
+        except Exception as error:
+            print('Error en seleccion de municipio', error)
+
+    def cargarFecha(qDate):
+        try:
+            data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.month(),qDate.year()))
+            var.ui.txtFechAlta.setText(str(data))
+            #Oculta la ventana
+            var.dlgcalendar.hide()
+
+        except Exception as error:
+            print('Error cargar fecha en txtFecha', error)
+
+    def letracapital():
+        try:
+            apel = var.ui.txtApel.text()
+            var.ui.txtApel.setText(apel.title())
+            nome = var.ui.txtNome.text();
+            var.ui.txtNome.setText(nome.title())
+            dir = var.ui.txtDir.text()
+            var.ui.txtDir.setText(dir.title())
+        except Exception as error:
+            print('Error en modulo mayusculas')

@@ -15,7 +15,7 @@ class Ui_Aviso(object):
     def setupUi(self, Aviso):
         Aviso.setObjectName("Aviso")
         Aviso.setWindowModality(QtCore.Qt.ApplicationModal)
-        Aviso.resize(360, 240)
+        Aviso.resize(449, 342)
         Aviso.setModal(True)
         self.BtnBoxAviso = QtWidgets.QDialogButtonBox(Aviso)
         self.BtnBoxAviso.setGeometry(QtCore.QRect(10, 160, 341, 91))
