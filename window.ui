@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
-    <height>609</height>
+    <width>634</width>
+    <height>763</height>
    </rect>
   </property>
   <property name="font">
@@ -63,8 +63,8 @@ align: center;
    <widget class="QPushButton" name="btnAceptar">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>540</y>
+      <x>130</x>
+      <y>270</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -76,8 +76,8 @@ align: center;
    <widget class="QPushButton" name="btnSalir">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>540</y>
+      <x>380</x>
+      <y>270</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -95,7 +95,7 @@ align: center;
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>40</y>
       <width>601</width>
       <height>221</height>
@@ -786,15 +786,35 @@ align: center;
      </layout>
     </widget>
    </widget>
-   <widget class="QListView" name="listView">
+   <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>280</y>
-      <width>581</width>
-      <height>231</height>
+      <x>20</x>
+      <y>310</y>
+      <width>601</width>
+      <height>411</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string>Apellidos</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Nombre</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Fecha Alta</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Formas de Pago</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -802,7 +822,7 @@ align: center;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>685</width>
+     <width>634</width>
      <height>21</height>
     </rect>
    </property>
