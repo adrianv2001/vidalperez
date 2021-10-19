@@ -114,4 +114,45 @@ class Clientes():
             dir = var.ui.txtDir.text()
             var.ui.txtDir.setText(dir.title())
         except Exception as error:
-            print('Error en modulo mayusculas')
+            print('Error en modulo mayusculas', error)
+
+    def guardaCli(self):
+        try:
+            #preparamos el registro
+            newCli =[]
+            client =[var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta]
+            for i in client:
+                newCli.append(i.text())
+            #cargamos en la tabla
+            row = 0
+            column = 0
+            var.ui.tabClientes.insertRow(row)
+            for campo in newCli:
+                cell = QtWidgets.QTableWidgetItem(campo)
+                var.ui.tabClientes.setItem(row,column,cell)
+                column+=1
+        except Exception as error:
+            print('Error en modulo guardar clientes', error)
+
+    def limpiarFormCli(self):
+        try:
+            var.ui.txtDni.setStyleSheet('QLineEdit {background-color: white;}')
+            var.ui.lblValidoDNI.setStyleSheet('QLabel {color: white;}')
+            var.ui.lblValidoDNI.setText('')
+            cajas = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechAlta,var.ui.txtDir]
+            for i in cajas:
+               i.setText('')
+            var.ui.rbtGroupSex.setExclusive(False)
+            var.ui.rbtFem.setChecked(False)
+            var.ui.rbtHom.setChecked(False)
+            var.ui.rbtGroupSex.setExclusive(True)
+
+            var.ui.chkTarjeta.setChecked(False)
+            var.ui.chkEfectivo.setChecked(False)
+            var.ui.chkTransfer.setChecked(False)
+            var.ui.chkCargoCuenta.setChecked(False)
+
+            var.ui.cmbProv.setCurrentIndex(0)
+            var.ui.cmbMun.setCurrentIndex(0)
+        except Exception as error:
+            print('Error en modulo limpiar formulario clientes, ', error)

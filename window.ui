@@ -60,7 +60,7 @@ align: center;
      <string>Gestión Clientes</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnAceptar">
+   <widget class="QPushButton" name="btnGrabaCli">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -70,7 +70,7 @@ align: center;
      </rect>
     </property>
     <property name="text">
-     <string>Aceptar</string>
+     <string>Guardar</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnSalir">
@@ -731,7 +731,7 @@ align: center;
       <rect>
        <x>18</x>
        <y>102</y>
-       <width>481</width>
+       <width>483</width>
        <height>20</height>
       </rect>
      </property>
@@ -785,8 +785,25 @@ align: center;
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="btnLimpiaCli">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>40</y>
+       <width>21</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>img/recargas.png</normaloff>img/recargas.png</iconset>
+     </property>
+    </widget>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="tabClientes">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -794,6 +811,9 @@ align: center;
       <width>601</width>
       <height>411</height>
      </rect>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
     </property>
     <column>
      <property name="text">

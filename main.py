@@ -1,6 +1,5 @@
 # This is a sample Python script.
 import sys,var
-
 import clients
 import events
 from window import *
@@ -41,6 +40,10 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
 
         var.ui.btnCalendar.clicked.connect(events.Eventos.abrircal)
+
+        var.ui.btnGrabaCli.clicked.connect(clients.Clientes.guardaCli)
+
+        var.ui.btnLimpiaCli.clicked.connect(clients.Clientes.limpiarFormCli)
         '''
         Eventos de la barra de menus
         '''
@@ -64,6 +67,11 @@ class Main(QtWidgets.QMainWindow):
         var.ui.cmbProv.activated[str].connect(clients.Clientes.selProv)
         clients.Clientes.cargaMun_(self)
         var.ui.cmbMun.activated[str].connect(clients.Clientes.selMun)
+
+        '''
+        Eventos QTabWidget
+        '''
+        events.Eventos.resizeTablaCli(self)
 
 
 if __name__ == '__main__':
