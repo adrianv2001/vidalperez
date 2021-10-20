@@ -5,34 +5,43 @@ Funciones gestión clientes
 '''
 import var
 from window import *
+
+
 class Clientes():
+    dnivalido = False
     def validarDNI():
+
         try:
+
             dni = var.ui.txtDni.text()
             var.ui.txtDni.setText(dni.upper())
-            tabla = 'TRWAGMYFPDXBNJZSQVHLCKE' #letras dni
-            dig_ext = 'XYZ' #digito
-            reemp_dig_ext = {'X':0,'Y':1,'Z':2}
+            tabla = 'TRWAGMYFPDXBNJZSQVHLCKE'  # letras dni
+            dig_ext = 'XYZ'  # digito
+            reemp_dig_ext = {'X': 0, 'Y': 1, 'Z': 2}
             numeros = '1234567890'
-            dni = dni.upper() #convertir la letra en mayusculas
+            dni = dni.upper()  # convertir la letra en mayusculas
             if len(dni) == 9:
                 dig_control = dni[8]
                 dni = dni[:8]
                 if dni[0] in dig_ext:
-                   dni = dni.replace[0], reemp_dig_ext[dni[0]]
+                    dni = dni.replace[0], reemp_dig_ext[dni[0]]
                 if len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) % 23] == dig_control:
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: green;}')
+                    var.ui.txtDni.setStyleSheet('QLineEdit {background-color: green;}')
                     var.ui.lblValidoDNI.setText('V')
+                    Clientes.dnivalido= True
 
                 else:
+
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
                     var.ui.lblValidoDNI.setText('X')
                     var.ui.txtDni.setStyleSheet('QLineEdit {background-color: red;}')
+
             else:
+
                 var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
                 var.ui.txtDni.setStyleSheet('QLineEdit {background-color: red;}')
                 var.ui.lblValidoDNI.setText('X')
-
 
 
         except Exception as error:
@@ -45,7 +54,7 @@ class Clientes():
             if var.ui.rbtHom.isChecked():
                 print('marcado masculino')
         except Exception as error:
-            print('Error en modulo seleccionar sexo, ',error)
+            print('Error en modulo seleccionar sexo, ', error)
 
     def selPago(self):
         try:
@@ -66,11 +75,12 @@ class Clientes():
     def cargaProv_(self):
         try:
             var.ui.cmbProv.clear()
-            prov = ['','A Coruña','Lugo','Pontevedra','Ourense']
+            prov = ['', 'A Coruña', 'Lugo', 'Pontevedra', 'Ourense']
             for i in prov:
                 var.ui.cmbProv.addItem(i)
         except Exception as error:
-            print('Error en módulo cargar provincias',error)
+            print('Error en módulo cargar provincias', error)
+
     def selProv(prov):
         try:
 
@@ -82,11 +92,12 @@ class Clientes():
     def cargaMun_(self):
         try:
             var.ui.cmbMun.clear()
-            mun = ['','Salvaterra de Miño','As Neves','Ponteareas','Salceda de Caselas']
+            mun = ['', 'Salvaterra de Miño', 'As Neves', 'Ponteareas', 'Salceda de Caselas']
             for i in mun:
                 var.ui.cmbMun.addItem(i)
         except Exception as error:
-            print('Error en módulo cargar municipios',error)
+            print('Error en módulo cargar municipios', error)
+
     def selMun(mun):
         try:
 
@@ -97,9 +108,9 @@ class Clientes():
 
     def cargarFecha(qDate):
         try:
-            data = ('{0}/{1}/{2}'.format(qDate.day(),qDate.month(),qDate.year()))
+            data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
             var.ui.txtFechAlta.setText(str(data))
-            #Oculta la ventana
+            # Oculta la ventana
             var.dlgcalendar.hide()
 
         except Exception as error:
@@ -118,19 +129,47 @@ class Clientes():
 
     def guardaCli(self):
         try:
-            #preparamos el registro
-            newCli =[]
-            client =[var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta]
-            for i in client:
-                newCli.append(i.text())
-            #cargamos en la tabla
-            row = 0
-            column = 0
-            var.ui.tabClientes.insertRow(row)
-            for campo in newCli:
-                cell = QtWidgets.QTableWidgetItem(campo)
-                var.ui.tabClientes.setItem(row,column,cell)
-                column+=1
+            if Clientes.dnivalido == True:
+                #preparamos el registro
+                newCli = []  # para base de datos
+                tabCli = []  # para tablewidget
+                client = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta]
+                # codigo para cargar la tabla
+                for i in client:
+                    tabCli.append(i.text())
+                    pagos = []
+
+                if var.ui.chkCargoCuenta.isChecked():
+                    pagos.append('Cargo Cuenta')
+
+                if var.ui.chkEfectivo.isChecked():
+                    pagos.append('Efectivo')
+
+                if var.ui.chkTarjeta.isChecked():
+                    pagos.append('Tarjeta')
+
+                if var.ui.chkTransfer.isChecked():
+                    pagos.append('Transferencia')
+
+                tabCli.append('; '.join(pagos))
+                # cargamos en la tabla
+
+                row = 0
+                column = 0
+                var.ui.tabClientes.insertRow(row)
+                for campo in tabCli:
+                    cell = QtWidgets.QTableWidgetItem(str(campo))
+                    var.ui.tabClientes.setItem(row, column, cell)
+                    column += 1
+
+                # codigo para grabar en Base de Datos
+            else:
+                print('DNI no valido')
+                msg=QtWidgets.QMessageBox()
+                msg.setText('DNI no valido')
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.exec()
         except Exception as error:
             print('Error en modulo guardar clientes', error)
 
@@ -139,9 +178,9 @@ class Clientes():
             var.ui.txtDni.setStyleSheet('QLineEdit {background-color: white;}')
             var.ui.lblValidoDNI.setStyleSheet('QLabel {color: white;}')
             var.ui.lblValidoDNI.setText('')
-            cajas = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechAlta,var.ui.txtDir]
+            cajas = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta, var.ui.txtDir]
             for i in cajas:
-               i.setText('')
+                i.setText('')
             var.ui.rbtGroupSex.setExclusive(False)
             var.ui.rbtFem.setChecked(False)
             var.ui.rbtHom.setChecked(False)

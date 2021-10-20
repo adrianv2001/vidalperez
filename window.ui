@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>763</height>
+    <width>869</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="font">
@@ -97,7 +97,7 @@ align: center;
      <rect>
       <x>20</x>
       <y>40</y>
-      <width>601</width>
+      <width>831</width>
       <height>221</height>
      </rect>
     </property>
@@ -539,8 +539,8 @@ align: center;
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>298</x>
-       <y>41</y>
+       <x>550</x>
+       <y>30</y>
        <width>228</width>
        <height>20</height>
       </rect>
@@ -788,10 +788,10 @@ align: center;
     <widget class="QPushButton" name="btnLimpiaCli">
      <property name="geometry">
       <rect>
-       <x>570</x>
-       <y>40</y>
-       <width>21</width>
-       <height>21</height>
+       <x>270</x>
+       <y>30</y>
+       <width>31</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -808,13 +808,18 @@ align: center;
      <rect>
       <x>20</x>
       <y>310</y>
-      <width>601</width>
+      <width>841</width>
       <height>411</height>
      </rect>
     </property>
     <property name="alternatingRowColors">
      <bool>true</bool>
     </property>
+    <column>
+     <property name="text">
+      <string>DNI</string>
+     </property>
+    </column>
     <column>
      <property name="text">
       <string>Apellidos</string>
@@ -842,7 +847,7 @@ align: center;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>634</width>
+     <width>869</width>
      <height>21</height>
     </rect>
    </property>
