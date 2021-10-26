@@ -7,3 +7,7 @@ Variables de ventana
 global ui
 global dlgaviso
 global dlgcalendar
+'''
+otras variables
+'''
+filedb = 'bbdd.db'

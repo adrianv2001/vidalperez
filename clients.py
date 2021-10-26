@@ -3,6 +3,7 @@
 Funciones gestión clientes
 
 '''
+import conexion
 import var
 from window import *
 
@@ -10,9 +11,7 @@ from window import *
 class Clientes():
     dnivalido = False
     def validarDNI():
-
         try:
-
             dni = var.ui.txtDni.text()
             var.ui.txtDni.setText(dni.upper())
             tabla = 'TRWAGMYFPDXBNJZSQVHLCKE'  # letras dni
@@ -27,22 +26,17 @@ class Clientes():
                     dni = dni.replace[0], reemp_dig_ext[dni[0]]
                 if len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni) % 23] == dig_control:
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: green;}')
-                    var.ui.txtDni.setStyleSheet('QLineEdit {background-color: green;}')
+                    var.ui.txtDni.setStyleSheet('QLineEdit {background-color: white ;}')
                     var.ui.lblValidoDNI.setText('V')
                     Clientes.dnivalido= True
-
                 else:
-
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
                     var.ui.lblValidoDNI.setText('X')
                     var.ui.txtDni.setStyleSheet('QLineEdit {background-color: red;}')
-
             else:
-
                 var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
                 var.ui.txtDni.setStyleSheet('QLineEdit {background-color: red;}')
                 var.ui.lblValidoDNI.setText('X')
-
 
         except Exception as error:
             print('Error en módulo validarDNI', error)
@@ -69,6 +63,7 @@ class Clientes():
 
             if var.ui.chkTransfer.isChecked():
                 print('Has seleccionado Transferencia Bancaria')
+
         except Exception as error:
             print('Error en modulo seleccionar Pago, ', error)
 
@@ -129,15 +124,26 @@ class Clientes():
 
     def guardaCli(self):
         try:
-            if Clientes.dnivalido == True:
+            if Clientes.dnivalido:  #es lo mismo que Clientes.dnivalido == True
                 #preparamos el registro
-                newCli = []  # para base de datos
+                newCli = []
+                cliente = [var.ui.txtDni, var.ui.txtFechAlta, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
                 tabCli = []  # para tablewidget
                 client = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta]
                 # codigo para cargar la tabla
+                for i in cliente:
+                    newCli.append(i.text())
+
                 for i in client:
                     tabCli.append(i.text())
-                    pagos = []
+
+                newCli.append(var.ui.cmbProv.currentText)
+                newCli.append(var.ui.cmbMun.currentText)
+                if var.ui.rbtHom.isChecked():
+                    newCli.append('Hombre')
+                elif var.ui.rbtFem.isChecked():
+                    newCli.append('Mujer')
+                pagos = []
 
                 if var.ui.chkCargoCuenta.isChecked():
                     pagos.append('Cargo Cuenta')
@@ -151,6 +157,9 @@ class Clientes():
                 if var.ui.chkTransfer.isChecked():
                     pagos.append('Transferencia')
 
+                pagos = set(pagos)
+                newCli.append('; '.join(pagos))
+                print(newCli)
                 tabCli.append('; '.join(pagos))
                 # cargamos en la tabla
 
@@ -163,6 +172,8 @@ class Clientes():
                     column += 1
 
                 # codigo para grabar en Base de Datos
+
+                conexion.Conexion.altaCli(newCli)
             else:
                 print('DNI no valido')
                 msg=QtWidgets.QMessageBox()
@@ -195,3 +206,19 @@ class Clientes():
             var.ui.cmbMun.setCurrentIndex(0)
         except Exception as error:
             print('Error en modulo limpiar formulario clientes, ', error)
+
+    def cargaCli(self):
+        try:
+            fila = var.ui.tabClientes.selectedItems()
+            datos = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechAlta]
+
+            if fila:
+                row = [dato.text() for dato in fila]
+                print(row)
+            for i, dato in enumerate(datos):
+                dato.setText(row[i])
+
+
+
+        except Exception as error:
+            print('Error en cargar datos de un cliente',error)

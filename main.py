@@ -1,10 +1,9 @@
 # This is a sample Python script.
-import sys,var
+import sys, var
 import clients
+import conexion
 import events
 from window import *
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from windowaviso import *
 from windowcal import *
 from datetime import *
@@ -25,7 +24,7 @@ class DialogCalendar(QtWidgets.QDialog):
         diaactual = datetime.now().day
         mesactual = datetime.now().month
         anoactual = datetime.now().year
-        var.dlgcalendar.calendar.setSelectedDate((QtCore.QDate(anoactual,mesactual,diaactual)))
+        var.dlgcalendar.calendar.setSelectedDate((QtCore.QDate(anoactual, mesactual, diaactual)))
         var.dlgcalendar.calendar.clicked.connect(clients.Clientes.cargarFecha)
 
 
@@ -59,7 +58,6 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtNome.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtDir.editingFinished.connect(clients.Clientes.letracapital)
 
-
         '''
         Eventos de ComboBox
         '''
@@ -72,6 +70,13 @@ class Main(QtWidgets.QMainWindow):
         Eventos QTabWidget
         '''
         events.Eventos.resizeTablaCli(self)
+        var.ui.tabClientes.clicked.connect(clients.Clientes.cargaCli)
+        var.ui.tabClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+
+        '''
+        Base de Datos
+        '''
+        conexion.Conexion.db_connect(var.filedb)
 
 
 if __name__ == '__main__':
@@ -81,6 +86,3 @@ if __name__ == '__main__':
     var.dlgcalendar = DialogCalendar()
     window.show()
     sys.exit(app.exec())
-
-
-
