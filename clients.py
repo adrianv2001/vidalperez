@@ -10,6 +10,7 @@ from window import *
 
 class Clientes():
     dnivalido = False
+
     def validarDNI():
         try:
             dni = var.ui.txtDni.text()
@@ -28,7 +29,7 @@ class Clientes():
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: green;}')
                     var.ui.txtDni.setStyleSheet('QLineEdit {background-color: white ;}')
                     var.ui.lblValidoDNI.setText('V')
-                    Clientes.dnivalido= True
+                    Clientes.dnivalido = True
                 else:
                     var.ui.lblValidoDNI.setStyleSheet('QLabel {color: red;}')
                     var.ui.lblValidoDNI.setText('X')
@@ -41,57 +42,59 @@ class Clientes():
         except Exception as error:
             print('Error en módulo validarDNI', error)
 
-    def selSexo(self):
-        try:
-            if var.ui.rbtFem.isChecked():
-                print('marcado femenino')
-            if var.ui.rbtHom.isChecked():
-                print('marcado masculino')
-        except Exception as error:
-            print('Error en modulo seleccionar sexo, ', error)
+    # def selSexo(self):
+    #     try:
+    #         if var.ui.rbtFem.isChecked():
+    #             print('marcado femenino')
+    #         if var.ui.rbtHom.isChecked():
+    #             print('marcado masculino')
+    #     except Exception as error:
+    #         print('Error en modulo seleccionar sexo, ', error)
 
-    def selPago(self):
-        try:
-            if var.ui.chkEfectivo.isChecked():
-                print('Has seleccionado efectivo')
+    # def selPago(self):
+    #     try:
+    #         if var.ui.chkEfectivo.isChecked():
+    #             print('Has seleccionado efectivo')
+    #
+    #         if var.ui.chkTarjeta.isChecked():
+    #             print('Has seleccionado Tarjeta')
+    #
+    #         if var.ui.chkCargoCuenta.isChecked():
+    #             print('Has seleccionado Cargo en Cuenta')
+    #
+    #         if var.ui.chkTransfer.isChecked():
+    #             print('Has seleccionado Transferencia Bancaria')
+    #
+    #     except Exception as error:
+    #         print('Error en modulo seleccionar Pago, ', error)
 
-            if var.ui.chkTarjeta.isChecked():
-                print('Has seleccionado Tarjeta')
+    # def cargaProv_(self):
+    #     try:
+    #         var.ui.cmbProv.clear()
+    #
+    #         prov = conexion.Conexion.cargarProv(self)
+    #         print(prov)
+    #         for i in prov:
+    #             var.ui.cmbProv.addItem(i)
+    #     except Exception as error:
+    #         print('Error en módulo cargar provincias', error)
 
-            if var.ui.chkCargoCuenta.isChecked():
-                print('Has seleccionado Cargo en Cuenta')
+    # def selProv(prov):
+    #     try:
+    #
+    #         print('Has seleccionado la provincia de ', prov)
+    #         return prov
+    #     except Exception as error:
+    #         print('Error en seleccion de provincia', error)
 
-            if var.ui.chkTransfer.isChecked():
-                print('Has seleccionado Transferencia Bancaria')
-
-        except Exception as error:
-            print('Error en modulo seleccionar Pago, ', error)
-
-    def cargaProv_(self):
-        try:
-            var.ui.cmbProv.clear()
-            prov = ['', 'A Coruña', 'Lugo', 'Pontevedra', 'Ourense']
-            for i in prov:
-                var.ui.cmbProv.addItem(i)
-        except Exception as error:
-            print('Error en módulo cargar provincias', error)
-
-    def selProv(prov):
-        try:
-
-            print('Has seleccionado la provincia de ', prov)
-            return prov
-        except Exception as error:
-            print('Error en seleccion de provincia', error)
-
-    def cargaMun_(self):
-        try:
-            var.ui.cmbMun.clear()
-            mun = ['', 'Salvaterra de Miño', 'As Neves', 'Ponteareas', 'Salceda de Caselas']
-            for i in mun:
-                var.ui.cmbMun.addItem(i)
-        except Exception as error:
-            print('Error en módulo cargar municipios', error)
+    # def cargaMun_(self):
+    #     try:
+    #         var.ui.cmbMun.clear()
+    #         mun = ['', 'Salvaterra de Miño', 'As Neves', 'Ponteareas', 'Salceda de Caselas']
+    #         for i in mun:
+    #             var.ui.cmbMun.addItem(i)
+    #     except Exception as error:
+    #         print('Error en módulo cargar municipios', error)
 
     def selMun(mun):
         try:
@@ -124,8 +127,8 @@ class Clientes():
 
     def guardaCli(self):
         try:
-            if Clientes.dnivalido:  #es lo mismo que Clientes.dnivalido == True
-                #preparamos el registro
+            if Clientes.dnivalido:  # es lo mismo que Clientes.dnivalido == True
+                # preparamos el registro
                 newCli = []
                 cliente = [var.ui.txtDni, var.ui.txtFechAlta, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
                 tabCli = []  # para tablewidget
@@ -163,20 +166,18 @@ class Clientes():
                 tabCli.append('; '.join(pagos))
                 # cargamos en la tabla
 
-                row = 0
-                column = 0
-                var.ui.tabClientes.insertRow(row)
-                for campo in tabCli:
-                    cell = QtWidgets.QTableWidgetItem(str(campo))
-                    var.ui.tabClientes.setItem(row, column, cell)
-                    column += 1
 
-                # codigo para grabar en Base de Datos
 
-                conexion.Conexion.altaCli(newCli)
+            # codigo para grabar en Base de Datos
+            if Clientes.dnivalido:
+                conexion.Conexion.altaCli(newCli)# graba en la Base de datos
+                conexion.Conexion.cargarTabCli(self) #recarga la tabla
+
+
+
             else:
                 print('DNI no valido')
-                msg=QtWidgets.QMessageBox()
+                msg = QtWidgets.QMessageBox()
                 msg.setText('DNI no valido')
                 msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Warning)
@@ -209,16 +210,47 @@ class Clientes():
 
     def cargaCli(self):
         try:
-            fila = var.ui.tabClientes.selectedItems()
-            datos = [var.ui.txtDni,var.ui.txtApel,var.ui.txtNome,var.ui.txtFechAlta]
+            # carga los datos del cliente al seleccionar en tabla
+            Clientes.limpiarFormCli()
+            fila = var.ui.tabClientes.selectedItems()  # seleccionamos la fila
+            datos = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta]
 
             if fila:
                 row = [dato.text() for dato in fila]
-                print(row)
+            print(row)
             for i, dato in enumerate(datos):
-                dato.setText(row[i])
+                dato.setText(row[i])  # cargamos en las cajas de texto los datos
 
 
+            # ahora cargamos los metodos de pago que estan en la posicion 5 de row
+            if 'Efectivo' in row[4]:
+                var.ui.chkEfectivo.setChecked(True)
+
+            if 'Transferencia' in row[4]:
+                var.ui.chkTransfer.setChecked(True)
+
+            if 'Tarjeta' in row[4]:
+                var.ui.chkTarjeta.setChecked(True)
+
+            if 'Cargo' in row[4]:
+                var.ui.chkCargoCuenta.setChecked(True)
+
+            registro = conexion.Conexion.oneCli(row[0])  # row0 es dni
+            var.ui.txtDir.setText(str(registro[0]))
+            var.ui.cmbProv.setCurrentText(str(registro[1]))
+            var.ui.cmbMun.setCurrentText(str(registro[2]))
+            if str(registro[3]) == 'Hombre':
+                var.ui.rbtHom.setChecked(True)
+            if str(registro[3]) == 'Mujer':
+                var.ui.rbtFem.setChecked(True)
 
         except Exception as error:
-            print('Error en cargar datos de un cliente',error)
+            print('Error en cargar datos de un cliente', error)
+
+    def bajaCli(self):
+        try:
+            dni = var.ui.txtDni.text()
+            conexion.Conexion.bajaCli(dni)
+            conexion.Conexion.cargarTabCli(self)
+        except Exception as error:
+            print('error en modulo baja cli de clientes')

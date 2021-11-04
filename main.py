@@ -43,6 +43,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnGrabaCli.clicked.connect(clients.Clientes.guardaCli)
 
         var.ui.btnLimpiaCli.clicked.connect(clients.Clientes.limpiarFormCli)
+
+        var.ui.btnBajaCli.clicked.connect(clients.Clientes.bajaCli)
         '''
         Eventos de la barra de menus
         '''
@@ -52,19 +54,14 @@ class Main(QtWidgets.QMainWindow):
         Eventos caja de texto
         '''
         var.ui.txtDni.editingFinished.connect(clients.Clientes.validarDNI)
-        var.ui.rbtGroupSex.buttonClicked.connect(clients.Clientes.selSexo)
-        var.ui.chkGroupPago.buttonClicked.connect(clients.Clientes.selPago)
+        #var.ui.rbtGroupSex.buttonClicked.connect(clients.Clientes.selSexo)
+        #var.ui.chkGroupPago.buttonClicked.connect(clients.Clientes.selPago)
         var.ui.txtApel.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtNome.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtDir.editingFinished.connect(clients.Clientes.letracapital)
 
-        '''
-        Eventos de ComboBox
-        '''
-        clients.Clientes.cargaProv_(self)
-        var.ui.cmbProv.activated[str].connect(clients.Clientes.selProv)
-        clients.Clientes.cargaMun_(self)
-        var.ui.cmbMun.activated[str].connect(clients.Clientes.selMun)
+
+
 
         '''
         Eventos QTabWidget
@@ -77,7 +74,16 @@ class Main(QtWidgets.QMainWindow):
         Base de Datos
         '''
         conexion.Conexion.db_connect(var.filedb)
+        conexion.Conexion.cargarTabCli(self)
 
+        '''
+        Eventos de ComboBox
+        '''
+        #clients.Clientes.cargaProv_(self)
+        #provincia = var.ui.cmbProv.activated[str].connect(clients.Clientes.selProv)
+        #clients.Clientes.cargaMun_(provincia)
+        conexion.Conexion.cargarProv(self)
+        conexion.Conexion.cargarMun(self)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
