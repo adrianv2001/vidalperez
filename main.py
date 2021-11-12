@@ -7,7 +7,13 @@ from window import *
 from windowaviso import *
 from windowcal import *
 from datetime import *
+import locale
+locale.setlocale(locale.LC_ALL,'es-ES')
 
+class FileDialogAbrir(QtWidgets.QFileDialog):
+    def __init__(self):
+        '''Ventana abrir explorador windows'''
+        super(FileDialogAbrir,self).__init__()
 
 class DialogAviso(QtWidgets.QDialog):
     def __init__(self):
@@ -37,31 +43,27 @@ class Main(QtWidgets.QMainWindow):
         Eventos de boton
         '''
         var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
-
         var.ui.btnCalendar.clicked.connect(events.Eventos.abrircal)
-
         var.ui.btnGrabaCli.clicked.connect(clients.Clientes.guardaCli)
-
         var.ui.btnLimpiaCli.clicked.connect(clients.Clientes.limpiarFormCli)
-
         var.ui.btnBajaCli.clicked.connect(clients.Clientes.bajaCli)
+        var.ui.btnModifCli.clicked.connect(clients.Clientes.modifCli)
         '''
-        Eventos de la barra de menus
+        Eventos de la barra de menus y de herramientas
         '''
         var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
+        var.ui.actionAbrir.triggered.connect(events.Eventos.Abrir)
+        var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
+        var.ui.actionRestaurar_BBDD.triggered.connect(events.Eventos.restaurarBackup)
 
         '''
         Eventos caja de texto
         '''
         var.ui.txtDni.editingFinished.connect(clients.Clientes.validarDNI)
-        #var.ui.rbtGroupSex.buttonClicked.connect(clients.Clientes.selSexo)
-        #var.ui.chkGroupPago.buttonClicked.connect(clients.Clientes.selPago)
+
         var.ui.txtApel.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtNome.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtDir.editingFinished.connect(clients.Clientes.letracapital)
-
-
-
 
         '''
         Eventos QTabWidget
@@ -79,16 +81,35 @@ class Main(QtWidgets.QMainWindow):
         '''
         Eventos de ComboBox
         '''
-        #clients.Clientes.cargaProv_(self)
-        #provincia = var.ui.cmbProv.activated[str].connect(clients.Clientes.selProv)
-        #clients.Clientes.cargaMun_(provincia)
+
         conexion.Conexion.cargarProv(self)
-        conexion.Conexion.cargarMun(self)
+        #var.ui.cmbProv.currentTextChanged.connect(clients.Clientes.cargaMun(self))
+
+
+
+        '''
+        Barra de estado
+        '''
+        var.ui.statusbar.addPermanentWidget(var.ui.lblFecha, 1)
+
+        day = datetime.now()
+        fe = day.strftime('%A, %d de %B de %Y')
+
+        var.ui.lblFecha.setText(fe.capitalize())
+
+        '''
+        Eventos menu herramientas'''
+        var.ui.actionactbarSalir.triggered.connect(events.Eventos.Salir)
+        var.ui.actionbarAbrirCarpeta.triggered.connect(events.Eventos.Abrir)
+        var.ui.actionCrear_Backup_2.triggered.connect(events.Eventos.crearBackup)
+        var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
     window = Main()
     var.dlgaviso = DialogAviso()
     var.dlgcalendar = DialogCalendar()
+    var.dlgabrir = FileDialogAbrir()
     window.show()
     sys.exit(app.exec())

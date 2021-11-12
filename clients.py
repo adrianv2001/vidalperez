@@ -3,9 +3,12 @@
 Funciones gestión clientes
 
 '''
+import locale
+
 import conexion
 import var
 from window import *
+
 
 
 class Clientes():
@@ -42,67 +45,6 @@ class Clientes():
         except Exception as error:
             print('Error en módulo validarDNI', error)
 
-    # def selSexo(self):
-    #     try:
-    #         if var.ui.rbtFem.isChecked():
-    #             print('marcado femenino')
-    #         if var.ui.rbtHom.isChecked():
-    #             print('marcado masculino')
-    #     except Exception as error:
-    #         print('Error en modulo seleccionar sexo, ', error)
-
-    # def selPago(self):
-    #     try:
-    #         if var.ui.chkEfectivo.isChecked():
-    #             print('Has seleccionado efectivo')
-    #
-    #         if var.ui.chkTarjeta.isChecked():
-    #             print('Has seleccionado Tarjeta')
-    #
-    #         if var.ui.chkCargoCuenta.isChecked():
-    #             print('Has seleccionado Cargo en Cuenta')
-    #
-    #         if var.ui.chkTransfer.isChecked():
-    #             print('Has seleccionado Transferencia Bancaria')
-    #
-    #     except Exception as error:
-    #         print('Error en modulo seleccionar Pago, ', error)
-
-    # def cargaProv_(self):
-    #     try:
-    #         var.ui.cmbProv.clear()
-    #
-    #         prov = conexion.Conexion.cargarProv(self)
-    #         print(prov)
-    #         for i in prov:
-    #             var.ui.cmbProv.addItem(i)
-    #     except Exception as error:
-    #         print('Error en módulo cargar provincias', error)
-
-    # def selProv(prov):
-    #     try:
-    #
-    #         print('Has seleccionado la provincia de ', prov)
-    #         return prov
-    #     except Exception as error:
-    #         print('Error en seleccion de provincia', error)
-
-    # def cargaMun_(self):
-    #     try:
-    #         var.ui.cmbMun.clear()
-    #         mun = ['', 'Salvaterra de Miño', 'As Neves', 'Ponteareas', 'Salceda de Caselas']
-    #         for i in mun:
-    #             var.ui.cmbMun.addItem(i)
-    #     except Exception as error:
-    #         print('Error en módulo cargar municipios', error)
-
-    def selMun(mun):
-        try:
-
-            print('Has seleccionado el municipio de ', mun)
-            return mun
-        except Exception as error:
-            print('Error en seleccion de municipio', error)
 
     def cargarFecha(qDate):
         try:
@@ -141,6 +83,7 @@ class Clientes():
                     tabCli.append(i.text())
 
                 newCli.append(var.ui.cmbProv.currentText)
+
                 newCli.append(var.ui.cmbMun.currentText)
                 if var.ui.rbtHom.isChecked():
                     newCli.append('Hombre')
@@ -164,16 +107,11 @@ class Clientes():
                 newCli.append('; '.join(pagos))
                 print(newCli)
                 tabCli.append('; '.join(pagos))
-                # cargamos en la tabla
-
-
 
             # codigo para grabar en Base de Datos
             if Clientes.dnivalido:
                 conexion.Conexion.altaCli(newCli)# graba en la Base de datos
                 conexion.Conexion.cargarTabCli(self) #recarga la tabla
-
-
 
             else:
                 print('DNI no valido')
@@ -211,7 +149,7 @@ class Clientes():
     def cargaCli(self):
         try:
             # carga los datos del cliente al seleccionar en tabla
-            Clientes.limpiarFormCli()
+            Clientes.limpiarFormCli(self)
             fila = var.ui.tabClientes.selectedItems()  # seleccionamos la fila
             datos = [var.ui.txtDni, var.ui.txtApel, var.ui.txtNome, var.ui.txtFechAlta]
 
@@ -220,7 +158,6 @@ class Clientes():
             print(row)
             for i, dato in enumerate(datos):
                 dato.setText(row[i])  # cargamos en las cajas de texto los datos
-
 
             # ahora cargamos los metodos de pago que estan en la posicion 5 de row
             if 'Efectivo' in row[4]:
@@ -247,6 +184,45 @@ class Clientes():
         except Exception as error:
             print('Error en cargar datos de un cliente', error)
 
+    def modifCli(self):
+        try:
+            modcliente = []
+            cliente = [var.ui.txtDni, var.ui.txtFechAlta, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
+            for i in cliente:
+                modcliente.append(i.text())
+
+            modcliente.append(var.ui.cmbProv.currentText())
+            modcliente.append(var.ui.cmbMun.currentText())
+
+            if var.ui.rbtHom.isChecked():
+                modcliente.append('Hombre')
+
+            elif var.ui.rbtFem.isChecked():
+                modcliente.append('Mujer')
+
+            pagos = []
+
+            if var.ui.chkCargoCuenta.isChecked():
+                pagos.append('Cargo Cuenta')
+
+            if var.ui.chkEfectivo.isChecked():
+                pagos.append('Efectivo')
+
+            if var.ui.chkTarjeta.isChecked():
+                pagos.append('Tarjeta')
+
+            if var.ui.chkTransfer.isChecked():
+                pagos.append('Transferencia')
+
+            pagos = set(pagos)
+            modcliente.append('; '.join(pagos))
+            print(modcliente)
+            conexion.Conexion.modifCli(modcliente)
+            conexion.Conexion.cargarTabCli(self)
+
+        except Exception as error:
+            print('error modificar cliente en clients.py')
+
     def bajaCli(self):
         try:
             dni = var.ui.txtDni.text()
@@ -254,3 +230,31 @@ class Clientes():
             conexion.Conexion.cargarTabCli(self)
         except Exception as error:
             print('error en modulo baja cli de clientes')
+
+    def cargaProv():
+        try:
+            var.ui.cmbProv.clear()
+            prov = conexion.Conexion.cargarProv(self)
+            #print(prov)
+            for i in prov:
+                var.ui.cmbProv.addItem(i)
+        except Exception as error:
+            print('Error en módulo cargar provincias', error)
+
+    # def selProv(prov):
+    #     try:
+    #
+    #         print('Has seleccionado la provincia de ', prov)
+    #         return prov
+    #     except Exception as error:
+    #         print('Error en seleccion de provincia', error)
+
+    def cargaMun(self):
+        try:
+            var.ui.cmbMun.clear()
+            mun = conexion.Conexion.cargarMun(self)
+            #print(prov)
+            for i in mun:
+                var.ui.cmbMun.addItem(i)
+        except Exception as error:
+            print('Error en módulo cargar municipios de clients', error)
