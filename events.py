@@ -10,6 +10,7 @@ import conexion
 from window import *
 from datetime import date, datetime
 from zipfile import ZipFile
+from PyQt5 import QtPrintSupport
 import var
 
 
@@ -24,13 +25,14 @@ class Eventos():
             else:
                 var.dlgaviso.hide()
         except Exception as error:
-            print('Error en módulo salir ',error)
+            print('Error en módulo salir ', error)
 
     def abrircal(self):
         try:
             var.dlgcalendar.show()
         except Exception as error:
             print('Error en modulo abrirCal, ', error)
+
     def resizeTablaCli(self):
         try:
             header = var.ui.tabClientes.horizontalHeader()
@@ -51,32 +53,41 @@ class Eventos():
         try:
             fecha = datetime.today()
             fecha = fecha.strftime('%YY.%m.%d.%H.%M.%S')
-            var.copia = (str(fecha)+'_backup.zip')
+            var.copia = (str(fecha) + '_backup.zip')
             option = QtWidgets.QFileDialog.Options()
-            directorio,filename = var.dlgabrir.getSaveFileName(None, 'Guardar Copia',var.copia,'.zip',options = option)
-            if var.dlgabrir.Accepted and filename !='':
-                fichzip = zipfile.ZipFile(var.copia,'w')
-                fichzip.write(var.filedb, os.path.basename(var.filedb),zipfile.ZIP_DEFLATED)
+            directorio, filename = var.dlgabrir.getSaveFileName(None, 'Guardar Copia', var.copia, '.zip',
+                                                                options=option)
+            if var.dlgabrir.Accepted and filename != '':
+                fichzip = zipfile.ZipFile(var.copia, 'w')
+                fichzip.write(var.filedb, os.path.basename(var.filedb), zipfile.ZIP_DEFLATED)
                 fichzip.close()
-                shutil.move(str(var.copia),str(directorio))
+                shutil.move(str(var.copia), str(directorio))
         except Exception as error:
             print('Error crear backup', error)
 
-
     def restaurarBackup(self):
-       try:
-           dirpro = os.getcwd()
-           dirpro.join('\\')
-           option = QtWidgets.QFileDialog.Options()
-           filename = var.dlgabrir.getOpenFileName(None, 'Restaurar Copia','', '*.zip', options = option)
-           if var.dlgabrir.Accepted and filename !='':
-               file = filename[0]
-               with zipfile.ZipFile(str(file), 'r') as bbdd:
-                   bbdd.extractall()
-                   bbdd.close()
-           conexion.Conexion.cargarTabCli(self)
+        try:
+            dirpro = os.getcwd()
+            dirpro.join('\\')
+            option = QtWidgets.QFileDialog.Options()
+            filename = var.dlgabrir.getOpenFileName(None, 'Restaurar Copia', '', '*.zip', options=option)
+            if var.dlgabrir.Accepted and filename != '':
+                file = filename[0]
+                with zipfile.ZipFile(str(file), 'r') as bbdd:
+                    bbdd.extractall()
+                    bbdd.close()
+            conexion.Conexion.cargarTabCli(self)
 
-           #codigo drive
+            # codigo drive
 
-       except Exception as error:
+        except Exception as error:
             print('Error Restaurar backup', error)
+
+    def Imprimir(self):
+        try:
+            #hay que pasarle un algo para imprimir
+            printDialog = QtPrintSupport.QPrintDialog()
+            if printDialog.exec():
+                printDialog.show()
+        except Exception as error:
+            print('Error Imprimir ', error)

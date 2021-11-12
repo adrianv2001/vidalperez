@@ -103,6 +103,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionbarAbrirCarpeta.triggered.connect(events.Eventos.Abrir)
         var.ui.actionCrear_Backup_2.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)
+        var.ui.actionbarImprimir.triggered.connect(events.Eventos.Imprimir)
+        var.ui.actionImprimir.triggered.connect(events.Eventos.Imprimir)
 
 
 if __name__ == '__main__':

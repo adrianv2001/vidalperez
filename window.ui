@@ -939,6 +939,7 @@ align: center;
     <addaction name="actionAbrir"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
+    <addaction name="actionImprimir"/>
    </widget>
    <widget class="QMenu" name="menuHerramientas">
     <property name="title">
@@ -966,6 +967,7 @@ align: center;
    <addaction name="actionbarAbrirCarpeta"/>
    <addaction name="actionCrear_Backup_2"/>
    <addaction name="actionRestaurar_Backup"/>
+   <addaction name="actionbarImprimir"/>
   </widget>
   <action name="actionSalir">
    <property name="text">
@@ -991,9 +993,6 @@ align: center;
    </property>
   </action>
   <action name="actionactbarSalir">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>img/boton.png</normaloff>img/boton.png</iconset>
@@ -1006,9 +1005,6 @@ align: center;
    </property>
   </action>
   <action name="actionbarAbrirCarpeta">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>img/abrir-documento.png</normaloff>img/abrir-documento.png</iconset>
@@ -1018,9 +1014,6 @@ align: center;
    </property>
   </action>
   <action name="actionCrear_Backup_2">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>img/cloud-backup-up-arrow.png</normaloff>img/cloud-backup-up-arrow.png</iconset>
@@ -1036,6 +1029,30 @@ align: center;
    </property>
    <property name="text">
     <string>Restaurar Backup</string>
+   </property>
+  </action>
+  <action name="actionbarImprimir">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imprimir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionImprimir">
+   <property name="icon">
+    <iconset>
+     <normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
+   </property>
+   <property name="text">
+    <string>Imprimir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>
