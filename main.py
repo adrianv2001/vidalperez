@@ -55,6 +55,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionAbrir.triggered.connect(events.Eventos.Abrir)
         var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_BBDD.triggered.connect(events.Eventos.restaurarBackup)
+        var.ui.actionImportar_Datos.triggered.connect(events.Eventos.importarDatos)
 
         '''
         Eventos caja de texto
@@ -83,8 +84,7 @@ class Main(QtWidgets.QMainWindow):
         '''
 
         conexion.Conexion.cargarProv(self)
-        #var.ui.cmbProv.currentTextChanged.connect(clients.Clientes.cargaMun(self))
-
+        var.ui.cmbProv.currentIndexChanged.connect(clients.Clientes.cargaMun)
 
 
         '''

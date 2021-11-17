@@ -6,6 +6,8 @@ import shutil
 import sys
 import zipfile
 
+import xlrd as xlrd
+
 import conexion
 from window import *
 from datetime import date, datetime
@@ -91,3 +93,28 @@ class Eventos():
                 printDialog.show()
         except Exception as error:
             print('Error Imprimir ', error)
+
+    def importarDatos(self):
+        try:
+            option = QtWidgets.QFileDialog.Options()
+            filename = var.dlgabrir.getOpenFileName(None,'Importar Datos','','*.xls;;*.csv',options=option)
+
+            if var.dlgabrir.Accepted and filename != '':
+                file = filename[0]
+                documento = xlrd.open_workbook(file)
+
+                datos = documento.sheet_by_index(0)
+                filas = datos.nrows
+                columnas = datos.ncols
+                newCli = []
+                for i in range(filas):
+                    if i==0:
+                        pass
+                    else:
+                        for j in range(9):
+                            newCli.append(str(datos.cell_value(1, 1)))
+                        cliente = newCli(i)
+                print(newCli)
+        except Exception as error:
+            print('Error en importarDatos en events',error)
+

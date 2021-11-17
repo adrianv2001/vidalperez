@@ -947,6 +947,8 @@ align: center;
     </property>
     <addaction name="actionCrear_Backup"/>
     <addaction name="actionRestaurar_BBDD"/>
+    <addaction name="separator"/>
+    <addaction name="actionImportar_Datos"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuHerramientas"/>
@@ -1055,15 +1057,20 @@ align: center;
     <string>Ctrl+P</string>
    </property>
   </action>
+  <action name="actionImportar_Datos">
+   <property name="text">
+    <string>Importar Datos</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="rbtGroupSex"/>
   <buttongroup name="chkGroupPago">
    <property name="exclusive">
     <bool>false</bool>
    </property>
   </buttongroup>
+  <buttongroup name="rbtGroupSex"/>
  </buttongroups>
 </ui>

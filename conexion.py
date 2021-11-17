@@ -1,6 +1,7 @@
 from PyQt5 import QtSql, QtWidgets
 from PyQt5.QtWidgets import QTableWidgetItem
 
+import clients
 import var
 
 
@@ -55,11 +56,13 @@ class Conexion():
 
     def cargarTabCli(self):
         try:
+            hay = False
             index = 0
             query = QtSql.QSqlQuery()
             query.prepare('select dni, apellidos, nombre,alta, pago from clientes')
             if query.exec_():
                 while query.next():
+                    hay = True
                     dni = query.value(0)
                     apellidos = query.value(1)
                     nombre = query.value(2)
@@ -72,6 +75,10 @@ class Conexion():
                     var.ui.tabClientes.setItem(index, 3, QTableWidgetItem(alta))
                     var.ui.tabClientes.setItem(index, 4, QTableWidgetItem(pago))
                     index += 1
+
+            if hay==False:
+                    var.ui.tabClientes.removeRow(0)
+                    clients.Clientes.limpiarFormCli()
         except Exception as e:
             print("error cargarTabCli", e)
 
@@ -86,8 +93,7 @@ class Conexion():
                 while query.next():
                     for i in range(4):
                         record.append(query.value(i))
-            print('pre')
-            print(record)
+            return record
         except Exception as error:
             print('Error en oneCli, ', error)
 
@@ -100,7 +106,7 @@ class Conexion():
             msg = QtWidgets.QMessageBox()
             if query.exec_():
 
-                msg.setText('Cliente con dni '+ dni+ ' dado de baja correctamente')
+                msg.setText('Cliente con dni ' + dni + ' dado de baja correctamente')
                 msg.setWindowTitle('Eliminacion Correcta')
                 msg.setIcon(QtWidgets.QMessageBox.Information)
                 msg.exec()
@@ -113,59 +119,60 @@ class Conexion():
             print('error en baja cli', error)
 
     def cargarProv(self):
-            try:
-                query = QtSql.QSqlQuery()
-                query.prepare('select * from provincias')
-
-
-                if query.exec_():
-                    while query.next():
-                        nombre = query.value(1)
-                        var.ui.cmbProv.addItem(nombre)
-
-                    # print(id,nombre)
-
-
-            except Exception as error:
-                print('Error en modulo cargar provincias, ', error)
-
-    def cargarMun(self):
         try:
-            id = 0
-            var.ui.cmbMun.clear()
-            prov = var.ui.cmbProv.currentText()
-
             query = QtSql.QSqlQuery()
-
-            query.prepare('select id from provincias where provincia=:prov')
-            query.bindValue(':prov', prov)
+            query.prepare('select * from provincias')
 
             if query.exec_():
+                var.ui.cmbProv.addItem('')
                 while query.next():
-                    id = query.value(0)
-                    print(id)
-
-                    query1 = QtSql.QSqlQuery()
-                    query1.prepare('select municipio from municipios where provincia_id=:id')
-                    query1.bindValue(':id', id)
-            if query1.exec_():
-                var.ui.cmbMun.addItem('')
-                while query1.next():
-                    nombre = query1.value(0)
-                    var.ui.cmbMun.addItem(nombre)
+                    nombre = query.value(1)
+                    var.ui.cmbProv.addItem(nombre)
 
                 # print(id,nombre)
+
 
         except Exception as error:
             print('Error en modulo cargar provincias, ', error)
 
-    def modifCLi(modcliente):
+    def cargarMun(self):
         try:
+            # busco el código de la provincia
+            var.ui.cmbMun.clear()
+            prov = var.ui.cmbProv.currentText()
             query = QtSql.QSqlQuery()
-            query.prepare('UPDATE clientes set alta=:alta,apellidos=:apellidos,nombre=:nombre,'
-                          'direccion=:direccion,provincia=:provincia,municipio=:municipio,'
-                          'sexo=:sexo,pago=:pago where dni=:dni')
-            query.bindValue(':dni', str(modcliente[0]))
+            query.prepare('select id from provincias where provincia = :prov')
+            query.bindValue(':prov', str(prov))
+            if query.exec_():
+                while query.next():
+                    id = query.value(0)
+            # cargo los municipios con ese código
+            query1 = QtSql.QSqlQuery()
+            query1.prepare('select municipio from municipios where provincia_id = :id')
+            query1.bindValue(':id', int(id))
+            if query1.exec_():
+                var.ui.cmbMun.addItem('')
+                while query1.next():
+                    var.ui.cmbMun.addItem(query1.value(0))
+        except Exception as error:
+            print('Error en la selección de municipio', error)
+
+    def modificarCli(modcliente):
+        try:
+            msg = QtWidgets.QMessageBox()
+            print (modcliente)
+            dni = modcliente[0]
+            if dni == "":
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setText("No hay ningún cliente")
+                msg.exec()
+                return
+            query = QtSql.QSqlQuery()
+            query.prepare('update clientes set alta=:alta,apellidos=:apellidos,nombre=:nombre, '
+                          'direccion=:direccion,provincia=:provincia,municipio=:municipio, '
+                          'sexo=:sexo,pago=:pago where dni = :dni')
+            # print(modcliente)
             query.bindValue(':alta', str(modcliente[1]))
             query.bindValue(':apellidos', str(modcliente[2]))
             query.bindValue(':nombre', str(modcliente[3]))
@@ -174,11 +181,10 @@ class Conexion():
             query.bindValue(':municipio', str(modcliente[6]))
             query.bindValue(':sexo', str(modcliente[7]))
             query.bindValue(':pago', str(modcliente[8]))
-            print(query)
+            query.bindValue(':dni', str(modcliente[0]))
             msg = QtWidgets.QMessageBox()
             if query.exec_():
-
-                msg.setText('Cliente con dni '+ ':dni,'+ ' dado de modificado correctamente')
+                msg.setText('Cliente modificado con dni ' + modcliente[0])
                 msg.setWindowTitle('Modificacion Correcta')
                 msg.setIcon(QtWidgets.QMessageBox.Information)
                 msg.exec()
@@ -187,7 +193,5 @@ class Conexion():
                 msg.setIcon(QtWidgets.QMessageBox.Warning)
                 msg.setText(query.lastError().text())
                 msg.exec()
-
-
-        except Exception as error:
-            print('problemas en modificar cliente en conexion.py')
+        except Exception as e:
+            print(e)

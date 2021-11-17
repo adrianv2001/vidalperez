@@ -10,7 +10,6 @@ import var
 from window import *
 
 
-
 class Clientes():
     dnivalido = False
 
@@ -44,7 +43,6 @@ class Clientes():
 
         except Exception as error:
             print('Error en módulo validarDNI', error)
-
 
     def cargarFecha(qDate):
         try:
@@ -110,8 +108,8 @@ class Clientes():
 
             # codigo para grabar en Base de Datos
             if Clientes.dnivalido:
-                conexion.Conexion.altaCli(newCli)# graba en la Base de datos
-                conexion.Conexion.cargarTabCli(self) #recarga la tabla
+                conexion.Conexion.altaCli(newCli)  # graba en la Base de datos
+                conexion.Conexion.cargarTabCli(self)  # recarga la tabla
 
             else:
                 print('DNI no valido')
@@ -155,7 +153,7 @@ class Clientes():
 
             if fila:
                 row = [dato.text() for dato in fila]
-            print(row)
+            # print(row)
             for i, dato in enumerate(datos):
                 dato.setText(row[i])  # cargamos en las cajas de texto los datos
 
@@ -171,8 +169,8 @@ class Clientes():
 
             if 'Cargo' in row[4]:
                 var.ui.chkCargoCuenta.setChecked(True)
-
-            registro = conexion.Conexion.oneCli(row[0])  # row0 es dni
+            registro = conexion.Conexion.oneCli(row[0])
+            print(registro)# row0 es dni
             var.ui.txtDir.setText(str(registro[0]))
             var.ui.cmbProv.setCurrentText(str(registro[1]))
             var.ui.cmbMun.setCurrentText(str(registro[2]))
@@ -187,21 +185,20 @@ class Clientes():
     def modifCli(self):
         try:
             modcliente = []
+
             cliente = [var.ui.txtDni, var.ui.txtFechAlta, var.ui.txtApel, var.ui.txtNome, var.ui.txtDir]
+            # codigo para cargar la tabla
             for i in cliente:
                 modcliente.append(i.text())
-
             modcliente.append(var.ui.cmbProv.currentText())
             modcliente.append(var.ui.cmbMun.currentText())
-
             if var.ui.rbtHom.isChecked():
                 modcliente.append('Hombre')
-
             elif var.ui.rbtFem.isChecked():
                 modcliente.append('Mujer')
-
+            else:
+                modcliente.append(' ')
             pagos = []
-
             if var.ui.chkCargoCuenta.isChecked():
                 pagos.append('Cargo Cuenta')
 
@@ -216,12 +213,11 @@ class Clientes():
 
             pagos = set(pagos)
             modcliente.append('; '.join(pagos))
-            print(modcliente)
-            conexion.Conexion.modifCli(modcliente)
+            conexion.Conexion.modificarCli(modcliente)
             conexion.Conexion.cargarTabCli(self)
 
-        except Exception as error:
-            print('error modificar cliente en clients.py')
+        except Exception as e:
+            print("error modificando cliente" + e)
 
     def bajaCli(self):
         try:
@@ -234,27 +230,16 @@ class Clientes():
     def cargaProv():
         try:
             var.ui.cmbProv.clear()
-            prov = conexion.Conexion.cargarProv(self)
-            #print(prov)
-            for i in prov:
-                var.ui.cmbProv.addItem(i)
+            prov = conexion.Conexion.cargarProv()
+            # print(prov)
+            #for i in prov:
+             #   var.ui.cmbProv.addItem(i)
         except Exception as error:
             print('Error en módulo cargar provincias', error)
-
-    # def selProv(prov):
-    #     try:
-    #
-    #         print('Has seleccionado la provincia de ', prov)
-    #         return prov
-    #     except Exception as error:
-    #         print('Error en seleccion de provincia', error)
 
     def cargaMun(self):
         try:
             var.ui.cmbMun.clear()
             mun = conexion.Conexion.cargarMun(self)
-            #print(prov)
-            for i in mun:
-                var.ui.cmbMun.addItem(i)
         except Exception as error:
-            print('Error en módulo cargar municipios de clients', error)
+            print('Error en el módulo cargar municipio, ', error)
