@@ -87,6 +87,8 @@ class Clientes():
                     newCli.append('Hombre')
                 elif var.ui.rbtFem.isChecked():
                     newCli.append('Mujer')
+
+
                 pagos = []
 
                 if var.ui.chkCargoCuenta.isChecked():
@@ -106,6 +108,9 @@ class Clientes():
                 print(newCli)
                 tabCli.append('; '.join(pagos))
 
+                envio = var.ui.spinEnvio.value()
+                newCli.append(envio)
+                print(newCli)
             # codigo para grabar en Base de Datos
             if Clientes.dnivalido:
                 conexion.Conexion.altaCli(newCli)  # graba en la Base de datos
@@ -141,6 +146,7 @@ class Clientes():
 
             var.ui.cmbProv.setCurrentIndex(0)
             var.ui.cmbMun.setCurrentIndex(0)
+            #+var.ui.spinEnvio.setValue(0)
         except Exception as error:
             print('Error en modulo limpiar formulario clientes, ', error)
 
@@ -178,6 +184,7 @@ class Clientes():
                 var.ui.rbtHom.setChecked(True)
             if str(registro[3]) == 'Mujer':
                 var.ui.rbtFem.setChecked(True)
+            var.ui.spinEnvio.setValue(registro[4])
 
         except Exception as error:
             print('Error en cargar datos de un cliente', error)
@@ -243,3 +250,17 @@ class Clientes():
             mun = conexion.Conexion.cargarMun(self)
         except Exception as error:
             print('Error en el módulo cargar municipio, ', error)
+
+    def envio(self):
+        try:
+            op = var.ui.spinEnvio.value()
+            if op == 0:
+                var.ui.lblEnvio.setText("Recogida Cliente")
+            if op == 1:
+                var.ui.lblEnvio.setText("Envío Nacional Paquetería Express Urgente")
+            if op == 2:
+                var.ui.lblEnvio.setText("Envío Nacional Paquetería Normal")
+            if op == 3:
+                var.ui.lblEnvio.setText("Envío Interncional")
+        except Exception as error:
+            print('Error en el módulo envio en clients, ', error)

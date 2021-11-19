@@ -7,6 +7,7 @@ import sys
 import zipfile
 
 import xlrd as xlrd
+from PyQt5.QtWidgets import QMessageBox
 
 import conexion
 from window import *
@@ -94,27 +95,46 @@ class Eventos():
         except Exception as error:
             print('Error Imprimir ', error)
 
-    def importarDatos(self):
+    def ImportarExcel(self):
         try:
+            newcli = []
+            contador = 0
             option = QtWidgets.QFileDialog.Options()
-            filename = var.dlgabrir.getOpenFileName(None,'Importar Datos','','*.xls;;*.csv',options=option)
+            ruta_excel = var.dlgabrir.getOpenFileName(None, 'Importar Excel', '', '*.xls', options=option)
+            fichero = ''
+            if var.dlgabrir.Accepted and ruta_excel != '':
+                fichero = ruta_excel[0]
+            workbook = xlrd.open_workbook(fichero)
+            hoja = workbook.sheet_by_index(0)
+            while contador < hoja.nrows:
+                for i in range(7):
+                    newcli.append(hoja.cell_value(contador + 1, i))
 
-            if var.dlgabrir.Accepted and filename != '':
-                file = filename[0]
-                documento = xlrd.open_workbook(file)
-
-                datos = documento.sheet_by_index(0)
-                filas = datos.nrows
-                columnas = datos.ncols
-                newCli = []
-                for i in range(filas):
-                    if i==0:
-                        pass
-                    else:
-                        for j in range(9):
-                            newCli.append(str(datos.cell_value(1, 1)))
-                        cliente = newCli(i)
-                print(newCli)
+                b = conexion.Conexion.altaCli2(newcli)
+                print(newcli)
+                conexion.Conexion.cargarTabCli(newcli)
+                newcli.clear()
+                contador = contador + 1
+            if b:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setText('Cliente dado de alta')
+                msg.exec()
         except Exception as error:
-            print('Error en importarDatos en events',error)
+            print('Error al importar ', error)
 
+    def ExportarDatos(self):
+        try:
+            conexion.Conexion.exportExcel(self)
+            try:
+                msgBox = QMessageBox()
+                msgBox.setIcon(QtWidgets.QMessageBox.Information)
+                msgBox.setText("Datos exportados con éxito.")
+                msgBox.setWindowTitle("Operación completada")
+                msgBox.setStandardButtons(QMessageBox.Ok)
+                msgBox.exec()
+            except Exception as error:
+                print('Error en mensaje generado exportar datos ', error)
+        except Exception as error:
+            print('Error en evento exportar datos ', error)

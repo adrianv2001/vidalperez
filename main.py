@@ -55,7 +55,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionAbrir.triggered.connect(events.Eventos.Abrir)
         var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_BBDD.triggered.connect(events.Eventos.restaurarBackup)
-        var.ui.actionImportar_Datos.triggered.connect(events.Eventos.importarDatos)
+        var.ui.actionImportar_Datos.triggered.connect(events.Eventos.ImportarExcel)
+        var.ui.actionExportar_Datos.triggered.connect(events.Eventos.ExportarDatos)
 
         '''
         Eventos caja de texto
@@ -105,6 +106,12 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)
         var.ui.actionbarImprimir.triggered.connect(events.Eventos.Imprimir)
         var.ui.actionImprimir.triggered.connect(events.Eventos.Imprimir)
+
+        '''
+        Eventos de spinBox
+        '''
+        var.ui.spinEnvio.valueChanged.connect(clients.Clientes.envio)
+
 
 
 if __name__ == '__main__':

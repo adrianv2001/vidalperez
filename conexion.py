@@ -1,5 +1,9 @@
+import datetime
+
+import xlwt as xlwt
 from PyQt5 import QtSql, QtWidgets
 from PyQt5.QtWidgets import QTableWidgetItem
+from datetime import *
 
 import clients
 import var
@@ -27,8 +31,8 @@ class Conexion():
     def altaCli(newCli):
         try:
             query = QtSql.QSqlQuery()
-            query.prepare('insert into clientes (dni,alta,apellidos,nombre,direccion,provincia,municipio,sexo,pago)'
-                          'VALUES(:dni,:alta,:apellidos,:nombre,:direccion,:provincia,:municipio,:sexo,:pago)')
+            query.prepare('insert into clientes (dni,alta,apellidos,nombre,direccion,provincia,municipio,sexo,pago,envio)'
+                          'VALUES(:dni,:alta,:apellidos,:nombre,:direccion,:provincia,:municipio,:sexo,:pago,:envio)')
             query.bindValue(':dni', str(newCli[0]))
             query.bindValue(':alta', str(newCli[1]))
             query.bindValue(':apellidos', str(newCli[2]))
@@ -38,6 +42,8 @@ class Conexion():
             query.bindValue(':municipio', str(newCli[6]))
             query.bindValue(':sexo', str(newCli[7]))
             query.bindValue(':pago', str(newCli[8]))
+            query.bindValue(':envio', str(newCli[9]))
+            # query.bindValue(':pago', str(newCli[9]))
             msg = QtWidgets.QMessageBox()
             if query.exec_():
                 msg.setText('Cliente insertado en la BBDD correctamente')
@@ -76,9 +82,9 @@ class Conexion():
                     var.ui.tabClientes.setItem(index, 4, QTableWidgetItem(pago))
                     index += 1
 
-            if hay==False:
-                    var.ui.tabClientes.removeRow(0)
-                    clients.Clientes.limpiarFormCli()
+            if hay == False:
+                var.ui.tabClientes.removeRow(0)
+                clients.Clientes.limpiarFormCli()
         except Exception as e:
             print("error cargarTabCli", e)
 
@@ -86,12 +92,12 @@ class Conexion():
         try:
             record = []
             query = QtSql.QSqlQuery()
-            query.prepare('select direccion,provincia,municipio,sexo'
+            query.prepare('select direccion,provincia,municipio,sexo,envio'
                           ' from clientes where dni = :dni')
             query.bindValue(':dni', dni)
             if query.exec_():
                 while query.next():
-                    for i in range(4):
+                    for i in range(5):
                         record.append(query.value(i))
             return record
         except Exception as error:
@@ -149,7 +155,7 @@ class Conexion():
             # cargo los municipios con ese código
             query1 = QtSql.QSqlQuery()
             query1.prepare('select municipio from municipios where provincia_id = :id')
-            query1.bindValue(':id', int(id))
+            query1.bindValue(':id', id)
             if query1.exec_():
                 var.ui.cmbMun.addItem('')
                 while query1.next():
@@ -160,7 +166,7 @@ class Conexion():
     def modificarCli(modcliente):
         try:
             msg = QtWidgets.QMessageBox()
-            print (modcliente)
+            print(modcliente)
             dni = modcliente[0]
             if dni == "":
                 msg.setWindowTitle('Aviso')
@@ -195,3 +201,63 @@ class Conexion():
                 msg.exec()
         except Exception as e:
             print(e)
+
+    def altaCli2(newcli):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('insert into clientes (dni, apellidos, nombre, direccion, provincia, sexo) VALUES '
+                          '(:dni, :apellidos, :nombre, :direccion, :provincia, :sexo)')
+            query.bindValue(':dni', str(newcli[0]))
+            query.bindValue(':apellidos', str(newcli[1]))
+            query.bindValue(':nombre', str(newcli[2]))
+            query.bindValue(':direccion', str(newcli[3]))
+            query.bindValue(':provincia', str(newcli[4]))
+            query.bindValue(':sexo', str(newcli[5]))
+
+
+            if not query.exec_():
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setText(query.lastError().text())
+                msg.exec()
+
+
+            return True
+        except Exception as error:
+            print('Problemas alta cliente', error)
+
+    def exportExcel(self):
+        try:
+            fecha = datetime.today()
+            fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
+            var.copia = (str(fecha) + '_dataExport.xls')
+            option = QtWidgets.QFileDialog.Options()
+            directorio, filename = var.dlgabrir.getSaveFileName(None, 'Exportar datos', var.copia, '.xls',
+                                                                options=option)
+            wb = xlwt.Workbook()
+            sheet1 = wb.add_sheet('Hoja 1')
+
+            # Cabeceras
+            sheet1.write(0, 0, 'DNI')
+            sheet1.write(0, 1, 'ALTA')
+            sheet1.write(0, 2, 'APELLIDOS')
+            sheet1.write(0, 3, 'NOMBRE')
+            sheet1.write(0, 4, 'DIRECCION')
+            sheet1.write(0, 5, 'PROVINCIA')
+            sheet1.write(0, 6, 'MUNICIPIO')
+            sheet1.write(0, 7, 'SEXO')
+            sheet1.write(0, 8, 'PAGO')
+            sheet1.write(0, 9, 'ENVIO')
+            f = 1
+            query = QtSql.QSqlQuery()
+            query.prepare('SELECT *  FROM clientes')
+            if query.exec_():
+                while query.next():
+                    for c in range(9):
+                        sheet1.write(f, c, query.value(c))
+                    f += 1
+            wb.save(directorio)
+
+        except Exception as error:
+            print('Error en conexion para exportar excel ', error)
