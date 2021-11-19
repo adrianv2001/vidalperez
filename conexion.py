@@ -34,15 +34,15 @@ class Conexion():
             query.prepare('insert into clientes (dni,alta,apellidos,nombre,direccion,provincia,municipio,sexo,pago,envio)'
                           'VALUES(:dni,:alta,:apellidos,:nombre,:direccion,:provincia,:municipio,:sexo,:pago,:envio)')
             query.bindValue(':dni', str(newCli[0]))
-            query.bindValue(':alta', str(newCli[1]))
-            query.bindValue(':apellidos', str(newCli[2]))
-            query.bindValue(':nombre', str(newCli[3]))
-            query.bindValue(':direccion', str(newCli[4]))
-            query.bindValue(':provincia', str(newCli[5]))
-            query.bindValue(':municipio', str(newCli[6]))
-            query.bindValue(':sexo', str(newCli[7]))
-            query.bindValue(':pago', str(newCli[8]))
-            query.bindValue(':envio', str(newCli[9]))
+            query.bindValue(':alta', str(newCli[7]))
+            query.bindValue(':apellidos', str(newCli[1]))
+            query.bindValue(':nombre', str(newCli[2]))
+            query.bindValue(':direccion', str(newCli[3]))
+            query.bindValue(':provincia', str(newCli[4]))
+            query.bindValue(':municipio', str(newCli[9]))
+            query.bindValue(':sexo', str(newCli[5]))
+            query.bindValue(':pago', str(newCli[6]))
+            query.bindValue(':envio', str(newCli[8]))
             # query.bindValue(':pago', str(newCli[9]))
             msg = QtWidgets.QMessageBox()
             if query.exec_():
@@ -65,7 +65,7 @@ class Conexion():
             hay = False
             index = 0
             query = QtSql.QSqlQuery()
-            query.prepare('select dni, apellidos, nombre,alta, pago from clientes')
+            query.prepare('select dni, apellidos, nombre, alta, pago from clientes')
             if query.exec_():
                 while query.next():
                     hay = True
@@ -205,14 +205,20 @@ class Conexion():
     def altaCli2(newcli):
         try:
             query = QtSql.QSqlQuery()
-            query.prepare('insert into clientes (dni, apellidos, nombre, direccion, provincia, sexo) VALUES '
-                          '(:dni, :apellidos, :nombre, :direccion, :provincia, :sexo)')
+            query.prepare('insert into clientes (dni, apellidos, nombre, direccion, provincia, sexo,pago,'
+                          ' alta, envio, municipio) VALUES '
+                          '(:dni, :apellidos, :nombre, :direccion, :provincia, :sexo, :pago, '
+                          ':alta, :envio, :municipio)')
             query.bindValue(':dni', str(newcli[0]))
             query.bindValue(':apellidos', str(newcli[1]))
             query.bindValue(':nombre', str(newcli[2]))
             query.bindValue(':direccion', str(newcli[3]))
             query.bindValue(':provincia', str(newcli[4]))
             query.bindValue(':sexo', str(newcli[5]))
+            query.bindValue(':pago',str(newcli[6]))
+            query.bindValue(':alta', str(newcli[7]))
+            query.bindValue(':envio', str(newcli[8]))
+            query.bindValue(':municipio',str(newcli[9]))
 
 
             if not query.exec_():

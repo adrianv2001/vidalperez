@@ -107,7 +107,7 @@ class Eventos():
             workbook = xlrd.open_workbook(fichero)
             hoja = workbook.sheet_by_index(0)
             while contador < hoja.nrows:
-                for i in range(7):
+                for i in range(10):
                     newcli.append(hoja.cell_value(contador + 1, i))
 
                 b = conexion.Conexion.altaCli2(newcli)
