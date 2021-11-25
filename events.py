@@ -78,63 +78,76 @@ class Eventos():
                 file = filename[0]
                 with zipfile.ZipFile(str(file), 'r') as bbdd:
                     bbdd.extractall()
-                    bbdd.close()
+                    #bbdd.close()
+            conexion.Conexion.db_connect(var.filedb)
             conexion.Conexion.cargarTabCli(self)
-
-            # codigo drive
 
         except Exception as error:
             print('Error Restaurar backup', error)
 
     def Imprimir(self):
         try:
-            #hay que pasarle un algo para imprimir
+            # hay que pasarle un algo para imprimir
             printDialog = QtPrintSupport.QPrintDialog()
             if printDialog.exec():
                 printDialog.show()
         except Exception as error:
             print('Error Imprimir ', error)
 
-    def ImportarExcel(self):
-        try:
-            newcli = []
-            contador = 0
-            option = QtWidgets.QFileDialog.Options()
-            ruta_excel = var.dlgabrir.getOpenFileName(None, 'Importar Excel', '', '*.xls', options=option)
-            fichero = ''
-            if var.dlgabrir.Accepted and ruta_excel != '':
-                fichero = ruta_excel[0]
-            workbook = xlrd.open_workbook(fichero)
-            hoja = workbook.sheet_by_index(0)
-            while contador < hoja.nrows:
-                for i in range(10):
-                    newcli.append(hoja.cell_value(contador + 1, i))
 
-                b = conexion.Conexion.altaCli2(newcli)
-                print(newcli)
-                conexion.Conexion.cargarTabCli(newcli)
-                newcli.clear()
-                contador = contador + 1
-            if b:
-                msg = QtWidgets.QMessageBox()
-                msg.setWindowTitle('Aviso')
-                msg.setIcon(QtWidgets.QMessageBox.Information)
-                msg.setText('Cliente dado de alta')
-                msg.exec()
+
+    def ImportarExcel(self):
+
+        try:
+
+            option = QtWidgets.QFileDialog.Options()
+            filename = var.dlgabrir.getOpenFileName(None, 'Importar archivo .xls', '', '*.xls;;All Files',
+                                                    options=option)
+            if var.dlgabrir.Accepted and filename != '':
+                wb = xlrd.open_workbook(filename[0])
+                sheet = wb.sheet_by_index(0)
+                # print(sheet.ncols)
+                # print(sheet.nrows)
+                COL_FECHA_ALTA = 1
+                COL_MUNICIPIO = 5
+                for row in range(1, sheet.nrows):
+                    cliente = []
+                    for col in range(sheet.ncols):
+                        # mantener el orden en la base de datos, en la hoja de cálculo no están estas columnas...
+                        if col == COL_FECHA_ALTA or col == COL_MUNICIPIO:
+                            cliente.append('')
+                        cliente.append(sheet.cell_value(row, col))
+                    cliente.append('')  # para pago
+                    conexion.Conexion.altaCli(cliente,False)
+                conexion.Conexion.cargarTabCli(self)
+
         except Exception as error:
-            print('Error al importar ', error)
+            print('Error importExcel ', error)
+
+
+
+
 
     def ExportarDatos(self):
         try:
             conexion.Conexion.exportExcel(self)
-            try:
-                msgBox = QMessageBox()
-                msgBox.setIcon(QtWidgets.QMessageBox.Information)
-                msgBox.setText("Datos exportados con éxito.")
-                msgBox.setWindowTitle("Operación completada")
-                msgBox.setStandardButtons(QMessageBox.Ok)
-                msgBox.exec()
-            except Exception as error:
-                print('Error en mensaje generado exportar datos ', error)
+
+            msgBox = QMessageBox()
+            msgBox.setIcon(QtWidgets.QMessageBox.Information)
+            msgBox.setText("Datos exportados con éxito.")
+            msgBox.setWindowTitle("Operación completada")
+            msgBox.setStandardButtons(QMessageBox.Ok)
+            msgBox.exec()
+
         except Exception as error:
             print('Error en evento exportar datos ', error)
+
+#Examen
+
+    def resizeTablaArt(self):
+        try:
+            header = var.ui.tabArticulos.horizontalHeader()
+            for i in range(5):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
+        except Exception as error:
+            print("Error en modulo resizeTablaCLi", error)

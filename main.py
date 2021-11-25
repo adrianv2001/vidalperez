@@ -1,5 +1,8 @@
 # This is a sample Python script.
 import sys, var
+
+import informes
+import articulos
 import clients
 import conexion
 import events
@@ -48,6 +51,14 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnLimpiaCli.clicked.connect(clients.Clientes.limpiarFormCli)
         var.ui.btnBajaCli.clicked.connect(clients.Clientes.bajaCli)
         var.ui.btnModifCli.clicked.connect(clients.Clientes.modifCli)
+
+
+        #Examen
+        var.ui.btnLimpiaArt.clicked.connect(articulos.articulos.limpiarFormArt)
+        var.ui.btnGrabaArt.clicked.connect(articulos.articulos.guardarArt)
+        var.ui.btnBuscar.clicked.connect(conexion.Conexion.buscarArt)
+        var.ui.btnModifArt.clicked.connect(articulos.articulos.modifArt)
+        var.ui.btnBajaArt.clicked.connect(articulos.articulos.bajaArt)
         '''
         Eventos de la barra de menus y de herramientas
         '''
@@ -57,6 +68,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionRestaurar_BBDD.triggered.connect(events.Eventos.restaurarBackup)
         var.ui.actionImportar_Datos.triggered.connect(events.Eventos.ImportarExcel)
         var.ui.actionExportar_Datos.triggered.connect(events.Eventos.ExportarDatos)
+        var.ui.actionListado_Clientes.triggered.connect(informes.Informes.listadoClientes)
 
         '''
         Eventos caja de texto
@@ -71,14 +83,20 @@ class Main(QtWidgets.QMainWindow):
         Eventos QTabWidget
         '''
         events.Eventos.resizeTablaCli(self)
+        #events.Eventos.resizeTablaArt(self)
         var.ui.tabClientes.clicked.connect(clients.Clientes.cargaCli)
         var.ui.tabClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        #Examen
+        var.ui.tabArticulos.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tabArticulos.clicked.connect(articulos.articulos.cargaArt)
 
         '''
         Base de Datos
         '''
         conexion.Conexion.db_connect(var.filedb)
         conexion.Conexion.cargarTabCli(self)
+        #Examen
+        conexion.Conexion.cargaTabArt(self)
 
         '''
         Eventos de ComboBox

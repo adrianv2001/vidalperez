@@ -28,28 +28,31 @@ class Conexion():
     Modulos gestion Base Datos cliente
     '''
 
-    def altaCli(newCli):
+    def altaCli(newCli, nuevos=True):
         try:
+
             query = QtSql.QSqlQuery()
-            query.prepare('insert into clientes (dni,alta,apellidos,nombre,direccion,provincia,municipio,sexo,pago,envio)'
-                          'VALUES(:dni,:alta,:apellidos,:nombre,:direccion,:provincia,:municipio,:sexo,:pago,:envio)')
+            query.prepare(
+                'insert into clientes (dni,alta,apellidos,nombre,direccion,provincia,municipio,sexo,pago,envio)'
+                'VALUES(:dni,:alta,:apellidos,:nombre,:direccion,:provincia,:municipio,:sexo,:pago,:envio)')
             query.bindValue(':dni', str(newCli[0]))
-            query.bindValue(':alta', str(newCli[7]))
-            query.bindValue(':apellidos', str(newCli[1]))
-            query.bindValue(':nombre', str(newCli[2]))
-            query.bindValue(':direccion', str(newCli[3]))
-            query.bindValue(':provincia', str(newCli[4]))
-            query.bindValue(':municipio', str(newCli[9]))
-            query.bindValue(':sexo', str(newCli[5]))
-            query.bindValue(':pago', str(newCli[6]))
-            query.bindValue(':envio', str(newCli[8]))
-            # query.bindValue(':pago', str(newCli[9]))
+            query.bindValue(':alta', str(newCli[1]))
+            query.bindValue(':apellidos', str(newCli[2]))
+            query.bindValue(':nombre', str(newCli[3]))
+            query.bindValue(':direccion', str(newCli[4]))
+            query.bindValue(':provincia', str(newCli[5]))
+            query.bindValue(':municipio', str(newCli[6]))
+            query.bindValue(':sexo', str(newCli[7]))
+
+            query.bindValue(':envio', str(newCli[9]))
+            query.bindValue(':pago', str(newCli[8]))
             msg = QtWidgets.QMessageBox()
             if query.exec_():
-                msg.setText('Cliente insertado en la BBDD correctamente')
-                msg.setWindowTitle('Inserción Correcta')
-                msg.setIcon(QtWidgets.QMessageBox.Information)
-                msg.exec()
+                if nuevos:
+                    msg.setText('Cliente insertado en la BBDD correctamente')
+                    msg.setWindowTitle('Inserción Correcta')
+                    msg.setIcon(QtWidgets.QMessageBox.Information)
+                    msg.exec()
             else:
                 msg.setWindowTitle('Aviso')
                 msg.setIcon(QtWidgets.QMessageBox.Warning)
@@ -67,8 +70,8 @@ class Conexion():
             query = QtSql.QSqlQuery()
             query.prepare('select dni, apellidos, nombre, alta, pago from clientes')
             if query.exec_():
+                hay = True
                 while query.next():
-                    hay = True
                     dni = query.value(0)
                     apellidos = query.value(1)
                     nombre = query.value(2)
@@ -82,9 +85,9 @@ class Conexion():
                     var.ui.tabClientes.setItem(index, 4, QTableWidgetItem(pago))
                     index += 1
 
-            if hay == False:
+            if not hay:
                 var.ui.tabClientes.removeRow(0)
-                clients.Clientes.limpiarFormCli()
+                clients.Clientes.limpiarFormCli(self)
         except Exception as e:
             print("error cargarTabCli", e)
 
@@ -134,9 +137,6 @@ class Conexion():
                 while query.next():
                     nombre = query.value(1)
                     var.ui.cmbProv.addItem(nombre)
-
-                # print(id,nombre)
-
 
         except Exception as error:
             print('Error en modulo cargar provincias, ', error)
@@ -202,37 +202,6 @@ class Conexion():
         except Exception as e:
             print(e)
 
-    def altaCli2(newcli):
-        try:
-            query = QtSql.QSqlQuery()
-            query.prepare('insert into clientes (dni, apellidos, nombre, direccion, provincia, sexo,pago,'
-                          ' alta, envio, municipio) VALUES '
-                          '(:dni, :apellidos, :nombre, :direccion, :provincia, :sexo, :pago, '
-                          ':alta, :envio, :municipio)')
-            query.bindValue(':dni', str(newcli[0]))
-            query.bindValue(':apellidos', str(newcli[1]))
-            query.bindValue(':nombre', str(newcli[2]))
-            query.bindValue(':direccion', str(newcli[3]))
-            query.bindValue(':provincia', str(newcli[4]))
-            query.bindValue(':sexo', str(newcli[5]))
-            query.bindValue(':pago',str(newcli[6]))
-            query.bindValue(':alta', str(newcli[7]))
-            query.bindValue(':envio', str(newcli[8]))
-            query.bindValue(':municipio',str(newcli[9]))
-
-
-            if not query.exec_():
-                msg = QtWidgets.QMessageBox()
-                msg.setWindowTitle('Aviso')
-                msg.setIcon(QtWidgets.QMessageBox.Warning)
-                msg.setText(query.lastError().text())
-                msg.exec()
-
-
-            return True
-        except Exception as error:
-            print('Problemas alta cliente', error)
-
     def exportExcel(self):
         try:
             fecha = datetime.today()
@@ -267,3 +236,121 @@ class Conexion():
 
         except Exception as error:
             print('Error en conexion para exportar excel ', error)
+
+    # Examen
+
+    def altaArt(newArt):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                'insert into articulos (nombre, precio)'
+                'VALUES(:nombre,:precio)')
+            query.bindValue(':nombre', str(newArt[0]))
+            query.bindValue(':precio', str(newArt[1]))
+
+            msg = QtWidgets.QMessageBox()
+            if query.exec_():
+                msg.setText('Articulo insertado en la BBDD correctamente')
+                msg.setWindowTitle('Inserción Correcta')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.exec()
+            else:
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setText(query.lastError().text())
+                msg.exec()
+
+        except Exception as error:
+            print('Error en conexion, Alta Articulo ', error)
+
+    def cargaTabArt(self):
+        try:
+            # El codigo de articulo no lo carga, no sé porque, con lo que las operaciones que dependan del id del
+            # articulo no pueden funcionar correctamente
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, nombre, precio from articulos')
+            if query.exec_():
+                while query.next():
+                    codigo = str(query.value(0))
+                    nombre = query.value(1)
+                    precio = query.value(2) + '€'
+
+                    print(codigo,nombre,precio)
+                    #str(codigo)
+                    var.ui.tabArticulos.setRowCount(index + 1)
+                    var.ui.tabArticulos.setItem(index, 0, QTableWidgetItem(str(codigo)))
+                    var.ui.tabArticulos.setItem(index, 1, QTableWidgetItem(nombre))
+                    var.ui.tabArticulos.setItem(index, 2, QTableWidgetItem(precio))
+                    print(var.ui.tabArticulos.takeItem(index, 0).text())
+                    index += 1
+        except Exception as error:
+            print('Error en conexion,cargar Tabla Articulos ', error)
+
+    def oneArt(codigo):
+        try:
+            print(codigo)
+            record = []
+            query = QtSql.QSqlQuery()
+            query.prepare('select nombre, precio'
+                          ' from clientes where codigo = :codigo')
+            query.bindValue(':codigo', codigo)
+            if query.exec_():
+                while query.next():
+                    for i in range(2):
+                        record.append(query.value(i))
+
+        except Exception as error:
+            print('Error en conexion, Cargar un articulo ', error)
+
+    def buscarArt(self):
+        try:
+            nombre = var.ui.txtNombreArt.text()
+            print(nombre)
+            var.ui.tabArticulos.clear()
+            index = 0
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, precio'
+                          ' from articulos where nombre = :nombre')
+            query.bindValue(':nombre', nombre)
+
+            if query.exec_():
+                while query.next():
+                    codigo = query.value(0)
+                    precio = query.value(1) + '€'
+                    print(codigo,nombre,precio)
+                    print(codigo, nombre, precio)
+                    var.ui.tabArticulos.setRowCount(index + 1)
+                    var.ui.tabArticulos.setItem(index, 0, QTableWidgetItem(type=int(codigo)))
+                    var.ui.tabArticulos.setItem(index, 1, QTableWidgetItem(nombre))
+                    var.ui.tabArticulos.setItem(index, 2, QTableWidgetItem(precio))
+                    print(var.ui.tabArticulos.takeItem(index, 0).text())
+                    index += 1
+        except Exception as error:
+            print('Error en buscar articulo,', error)
+
+    def modificarArt(modart):
+        try:
+            msg = QtWidgets.QMessageBox()
+
+
+            query = QtSql.QSqlQuery()
+            query.prepare('update clientes set nombre=:nombre,precio=:precio where codigo = :codigo')
+            # print(modcliente)
+            query.bindValue(':codigo', str(modart[0]))
+            query.bindValue(':alta', str(modart[1]))
+            query.bindValue(':apellidos', str(modart[2]))
+
+            msg = QtWidgets.QMessageBox()
+            if query.exec_():
+                msg.setText('articulo modificado' + modart[0])
+                msg.setWindowTitle('Modificacion Correcta')
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.exec()
+            else:
+                msg.setWindowTitle('Aviso')
+                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setText(query.lastError().text())
+                msg.exec()
+        except Exception as e:
+            print(e)

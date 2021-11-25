@@ -15,6 +15,7 @@ global dlgcalendar
 dlgcalendar: Ui_windowcal
 global dlgabrir
 global copia
+global cv
 '''
 otras variables
 '''

@@ -80,9 +80,9 @@ class Clientes():
                 for i in client:
                     tabCli.append(i.text())
 
-                newCli.append(var.ui.cmbProv.currentText)
+                newCli.append(var.ui.cmbProv.currentText())
 
-                newCli.append(var.ui.cmbMun.currentText)
+                newCli.append(var.ui.cmbMun.currentText())
                 if var.ui.rbtHom.isChecked():
                     newCli.append('Hombre')
                 elif var.ui.rbtFem.isChecked():
