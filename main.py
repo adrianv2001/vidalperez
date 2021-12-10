@@ -1,6 +1,7 @@
 # This is a sample Python script.
 import sys, var
 
+import invoice
 import informes
 import articulos
 import clients
@@ -45,7 +46,7 @@ class Main(QtWidgets.QMainWindow):
         '''
         Eventos de boton
         '''
-        var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
+        #var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
         var.ui.btnCalendar.clicked.connect(events.Eventos.abrircal)
         var.ui.btnGrabaCli.clicked.connect(clients.Clientes.guardaCli)
         var.ui.btnLimpiaCli.clicked.connect(clients.Clientes.limpiarFormCli)
@@ -54,11 +55,17 @@ class Main(QtWidgets.QMainWindow):
 
 
         #Examen
-        var.ui.btnLimpiaArt.clicked.connect(articulos.articulos.limpiarFormArt)
-        var.ui.btnGrabaArt.clicked.connect(articulos.articulos.guardarArt)
+        var.ui.btnLimpiaArt.clicked.connect(articulos.Productos.limpiarFormPro)
+        var.ui.btnGrabaArt.clicked.connect(articulos.Productos.altaPro)
         var.ui.btnBuscar.clicked.connect(conexion.Conexion.buscarArt)
-        var.ui.btnModifArt.clicked.connect(articulos.articulos.modifArt)
-        var.ui.btnBajaArt.clicked.connect(articulos.articulos.bajaArt)
+        var.ui.btnModifArt.clicked.connect(articulos.Productos.modifProducto)
+        var.ui.btnBajaArt.clicked.connect(articulos.Productos.bajaArt)
+
+        var.ui.btnBuscaCliFac.clicked.connect(invoice.Facturas.buscaCli)
+        var.ui.btnFechaFac.clicked.connect(events.Eventos.abrircal)
+        var.ui.btnFacturar.clicked.connect(invoice.Facturas.altaFac)
+
+        var.ui.btnPDFCli.clicked.connect(informes.Informes.listadoClientes) #boton report cli
         '''
         Eventos de la barra de menus y de herramientas
         '''
@@ -88,15 +95,18 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tabClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         #Examen
         var.ui.tabArticulos.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
-        var.ui.tabArticulos.clicked.connect(articulos.articulos.cargaArt)
+        var.ui.tabArticulos.clicked.connect(articulos.Productos.cargaArt)
 
+        var.ui.tabFacturas.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tabFacturas.clicked.connect(invoice.Facturas.cargaFac)
         '''
         Base de Datos
         '''
         conexion.Conexion.db_connect(var.filedb)
         conexion.Conexion.cargarTabCli(self)
         #Examen
-        conexion.Conexion.cargaTabArt(self)
+        conexion.Conexion.cargarTabPro(self)
+        conexion.Conexion.cargarTabFacturas(self)
 
         '''
         Eventos de ComboBox

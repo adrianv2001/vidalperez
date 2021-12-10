@@ -147,7 +147,7 @@ class Eventos():
     def resizeTablaArt(self):
         try:
             header = var.ui.tabArticulos.horizontalHeader()
-            for i in range(5):
+            for i in range(3):
                 header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
         except Exception as error:
             print("Error en modulo resizeTablaCLi", error)

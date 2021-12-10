@@ -1,40 +1,40 @@
 import conexion
 import var
-from PyQt5 import QtWidgets
+import locale
+locale.setlocale( locale.LC_ALL, '' )
 
 
-class articulos():
+class Productos():
 
-    def limpiarFormArt(self):
+    def altaPro(self):
+        try:
+            registro = []
+            producto = var.ui.txtNombreArt.text()
+            producto = producto.title()
+            registro.append(producto)
+            precio = var.ui.txtPrecioArt.text()
+            precio = precio.replace(',', '.') #necesita estar con punto como en américa
+            precio = locale.currency(float(precio))
+            registro.append(precio)
+            conexion.Conexion.altaArt(registro)
+            conexion.Conexion.cargarTabPro(self)
+
+        except Exception as error:
+            print('Error en alta productos: ', error)
+
+
+    def limpiarFormPro(self):
         try:
             var.ui.txtNombreArt.setText('')
             var.ui.txtPrecioArt.setText('')
         except Exception as error:
             print('Error en Limpiar Tabla Articulos',error)
 
-    def guardarArt(self):
-        try:
-            newArt = []
-            nombreArt = var.ui.txtNombreArt.text()
-            precioArt = var.ui.txtPrecioArt.text()
-
-            print(nombreArt)
-            print(precioArt)
-
-            newArt.append(nombreArt)
-            newArt.append(precioArt)
-            print(newArt)
-            conexion.Conexion.altaArt(newArt)
-            conexion.Conexion.cargaTabArt(self)
-
-
-        except Exception as error:
-            print('Error en guardar articulo',error)
 
     def cargaArt(self):
         try:
 
-            articulos.limpiarFormArt(self)
+            Productos.limpiarFormPro(self)
             fila = var.ui.tabArticulos.selectedItems()  # seleccionamos la fila
             datos = [var.ui.txtNombreArt, var.ui.txtPrecioArt]
 
@@ -47,37 +47,32 @@ class articulos():
             registro = conexion.Conexion.oneArt(row[0])
             var.ui.txtNombreArt.setText(str(registro[0]))
             var.ui.txtPrecioArt.setCurrentText(str(registro[1]))
+            var.ui.lblCodigo.setText(row[0])
 
         except Exception as error:
             print('En Articulos, Error en cargar datos de un articulo', error)
 
-    def modifArt(self):
+    def modifProducto(self):
         try:
             modart = []
             tab = var.ui.tabArticulos
             h = tab.takeItem(0,1).text()
-            print(h)
 
             art = [var.ui.txtNombreArt,var.ui.txtPrecioArt]
-
 
             for i in art:
                 modart.append(i.text())
 
-
-            conexion.Conexion.modificarArt(modart)
-            conexion.Conexion.cargarTabCli(self)
+            conexion.Conexion.modifPro(modart)
+            conexion.Conexion.cargarTabPro(self)
 
         except Exception as e:
             print("error modificando articulo" + e)
 
     def bajaArt(row):
         try:
-            #codigo = var.ui.tabArticulos.text().
-            h = var.ui.tabArticulos.selectedItems()[1]
-            print(h)
-            #var.ui.tabArticulos.setItem(index, 0, QTableWidgetItem(codigo))
-            #conexion.Conexion.bajaArt(codigo)
-            #conexion.Conexion.cargarTabCli(self)
+            codigo = var.ui.lblCodigo.text()
+            conexion.Conexion.bajaArt(codigo)
+            conexion.Conexion.cargarTabPro
         except Exception as error:
             print('error en modulo baja art de articulos', error)

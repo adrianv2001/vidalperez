@@ -47,7 +47,11 @@ class Clientes():
     def cargarFecha(qDate):
         try:
             data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
-            var.ui.txtFechAlta.setText(str(data))
+
+            if var.ui.tabPrograma.currentIndex()==0:
+                var.ui.txtFechAlta.setText(str(data.strftime('%dd/%mm/%YYYY')))
+            elif var.ui.tabPrograma.currentIndex()==1:
+                var.ui.txtFechaFac.setText(str(data))
             # Oculta la ventana
             var.dlgcalendar.hide()
 
