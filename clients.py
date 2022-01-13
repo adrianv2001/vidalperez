@@ -46,12 +46,13 @@ class Clientes():
 
     def cargarFecha(qDate):
         try:
-            data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
+            data = (str(qDate.day()).zfill(2)+'/'+str(qDate.month()).zfill(2)+'/'+str(qDate.year()))
+            #data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
 
             if var.ui.tabPrograma.currentIndex()==0:
-                var.ui.txtFechAlta.setText(str(data.strftime('%dd/%mm/%YYYY')))
+               var.ui.txtFechAlta.setText(data)
             elif var.ui.tabPrograma.currentIndex()==1:
-                var.ui.txtFechaFac.setText(str(data))
+               var.ui.txtFechaFac.setText(data)
             # Oculta la ventana
             var.dlgcalendar.hide()
 
@@ -163,6 +164,7 @@ class Clientes():
 
             if fila:
                 row = [dato.text() for dato in fila]
+
             # print(row)
             for i, dato in enumerate(datos):
                 dato.setText(row[i])  # cargamos en las cajas de texto los datos
@@ -180,7 +182,8 @@ class Clientes():
             if 'Cargo' in row[4]:
                 var.ui.chkCargoCuenta.setChecked(True)
             registro = conexion.Conexion.oneCli(row[0])
-            print(registro)# row0 es dni
+            var.ui.txtDNIFac.setText(str(row[0]))
+            var.ui.lblCliente.setText(row[1]+', '+row[2])
             var.ui.txtDir.setText(str(registro[0]))
             var.ui.cmbProv.setCurrentText(str(registro[1]))
             var.ui.cmbMun.setCurrentText(str(registro[2]))

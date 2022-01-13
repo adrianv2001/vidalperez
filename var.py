@@ -16,6 +16,8 @@ dlgcalendar: Ui_windowcal
 global dlgabrir
 global copia
 global cv
+global btnfacdel
+global cmbProducto
 '''
 otras variables
 '''

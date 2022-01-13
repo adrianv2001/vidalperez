@@ -150,4 +150,23 @@ class Eventos():
             for i in range(3):
                 header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
         except Exception as error:
+            print("Error en modulo resizeTablaArt", error)
+
+    def resizeTablaFac(self):
+        try:
+            header = var.ui.tabFacturas.horizontalHeader()
+            for i in range(3):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
+
+        except Exception as error:
+            print("Error en modulo resizeTablaFac", error)
+
+
+    def resizeTablaVentas(self):
+        try:
+            header = var.ui.tabVentas.horizontalHeader()
+            for i in range(5):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
+
+        except Exception as error:
             print("Error en modulo resizeTablaCLi", error)

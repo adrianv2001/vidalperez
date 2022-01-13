@@ -36,18 +36,14 @@ class Productos():
 
             Productos.limpiarFormPro(self)
             fila = var.ui.tabArticulos.selectedItems()  # seleccionamos la fila
-            datos = [var.ui.txtNombreArt, var.ui.txtPrecioArt]
+            datos = [var.ui.lblCodigo,var.ui.txtNombreArt, var.ui.txtPrecioArt]
 
             if fila:
                 row = [dato.text() for dato in fila]
+            print(row)
 
             for i, dato in enumerate(datos):
                 dato.setText(row[i])
-
-            registro = conexion.Conexion.oneArt(row[0])
-            var.ui.txtNombreArt.setText(str(registro[0]))
-            var.ui.txtPrecioArt.setCurrentText(str(registro[1]))
-            var.ui.lblCodigo.setText(row[0])
 
         except Exception as error:
             print('En Articulos, Error en cargar datos de un articulo', error)
@@ -58,11 +54,11 @@ class Productos():
             tab = var.ui.tabArticulos
             h = tab.takeItem(0,1).text()
 
-            art = [var.ui.txtNombreArt,var.ui.txtPrecioArt]
+            art = [var.ui.lblCodigo,var.ui.txtNombreArt,var.ui.txtPrecioArt]
 
             for i in art:
                 modart.append(i.text())
-
+            print('modart = ',modart)
             conexion.Conexion.modifPro(modart)
             conexion.Conexion.cargarTabPro(self)
 

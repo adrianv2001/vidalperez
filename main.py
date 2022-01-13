@@ -66,6 +66,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnFacturar.clicked.connect(invoice.Facturas.altaFac)
 
         var.ui.btnPDFCli.clicked.connect(informes.Informes.listadoClientes) #boton report cli
+        var.ui.btnReprPro.clicked.connect(informes.Informes.listadoProductos)
         '''
         Eventos de la barra de menus y de herramientas
         '''
@@ -90,7 +91,9 @@ class Main(QtWidgets.QMainWindow):
         Eventos QTabWidget
         '''
         events.Eventos.resizeTablaCli(self)
-        #events.Eventos.resizeTablaArt(self)
+        events.Eventos.resizeTablaArt(self)
+        events.Eventos.resizeTablaFac(self)
+        events.Eventos.resizeTablaVentas(self)
         var.ui.tabClientes.clicked.connect(clients.Clientes.cargaCli)
         var.ui.tabClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         #Examen
@@ -98,7 +101,9 @@ class Main(QtWidgets.QMainWindow):
         var.ui.tabArticulos.clicked.connect(articulos.Productos.cargaArt)
 
         var.ui.tabFacturas.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
+        var.ui.tabVentas.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         var.ui.tabFacturas.clicked.connect(invoice.Facturas.cargaFac)
+        invoice.Facturas.cargarLineaVenta(self)
         '''
         Base de Datos
         '''

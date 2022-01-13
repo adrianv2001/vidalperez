@@ -6,6 +6,66 @@ from reportlab.pdfgen import canvas
 
 
 class Informes():
+    def listadoProductos(self):
+        try:
+            # se crea el lienzo
+            var.cv = canvas.Canvas('informes/listadoproductos.pdf')
+            var.cv.setTitle('Listado Productos')
+            var.cv.setAuthor('Departamento de Administracion')
+            Informes.cabecera()
+
+            # Se guardan los cambios
+
+            rootPath = '.\\informes'  # Aqui se van a guardar los PDF
+            var.cv.setFont('Helvetica-Bold', size=9)
+            textotitulo = 'LISTADO PRODUCTOS'
+            Informes.pie(textotitulo)
+
+            var.cv.drawString(255, 690, textotitulo)  # Dibuja el titulo
+            var.cv.line(40, 685, 530, 685)  # Dibuja linea por debajo del titulo
+
+            items = ['Código', 'Articulo', 'Precio']
+            var.cv.drawString(70, 675, items[0])
+            var.cv.drawString(200, 675, items[1])
+            var.cv.drawString(350, 675, items[2])
+            var.cv.line(40, 670, 530, 670)
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, nombre, precio from articulos order by codigo')
+
+            var.cv.setFont('Helvetica', size=8)
+            if query.exec_():
+                i = 50
+                j = 655
+                while query.next():
+                    if j <= 80:
+                        #var.cv.drawString(440,30,'Página Siguiente...')
+                        var.cv.showPage()
+                        Informes.cabecera()
+                        Informes.pie(textotitulo)
+                        var.cv.setFont('Helvetica-Bold', size=9)
+                        var.cv.drawString(255, 690, textotitulo)  # Dibuja el titulo
+                        var.cv.line(40, 685, 530, 685)
+                        var.cv.drawString(70, 675, items[0])
+                        var.cv.drawString(200, 675, items[1])
+                        var.cv.drawString(350, 675, items[2])
+                        var.cv.line(40, 670, 530, 670)
+                        i = 50
+                        j = 655
+                        var.cv.setFont('Helvetica', size=8)
+                    var.cv.drawString(i, j, str(query.value(0)))
+                    var.cv.drawString(i + 140, j, str(query.value(1)))
+                    var.cv.drawString(i + 300, j, str(query.value(2)))
+                    j = j - 20
+
+            cont = 0
+            for file in os.listdir(rootPath):
+                if file.endswith('.pdf'):
+                    os.startfile('%s/%s' % (rootPath, file))
+                cont = cont + 1
+
+            var.cv.save()
+        except Exception as error:
+            print('Error en listar clientes, en informes', error)
     # Se va a crear un listado en pdf de todos los clientes
     def listadoClientes(self):
         try:
@@ -47,7 +107,7 @@ class Informes():
                         var.cv.setFont('Helvetica-Bold', size=9)
                         var.cv.drawString(255, 690, textotitulo)  # Dibuja el titulo
                         var.cv.line(40, 685, 530, 685)
-                        var.cv.drawString(70, 675, items[0])
+                        var.cv.drawString(75, 675, items[0])
                         var.cv.drawString(200, 675, items[1])
                         var.cv.drawString(350, 675, items[2])
                         var.cv.line(40, 670, 530, 670)
@@ -100,4 +160,4 @@ class Informes():
             var.cv.drawString(255, 40, str(texto))
             var.cv.drawString(500, 40, str('Pagina %s' % var.cv.getPageNumber()))
         except Exception as error:
-            print('error creacion de pie informe clientes', error)
+            print('error creacion de pie informe', error)

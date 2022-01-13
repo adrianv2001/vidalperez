@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="643e68a1-049a-4b32-a501-62dedd2d64d3" name="Changes" comment="barra de herramientas y boton imprimir funciondo&#10;&#10;municpios no funciona&#10;cargar sexo no funciona">
+      <change beforePath="$PROJECT_DIR$/2021.11.19.11.20.12_dataExport.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2021Y.11.19.11.05.37_backup.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bbdd.db" beforeDir="false" afterPath="$PROJECT_DIR$/bbdd.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clients.py" beforeDir="false" afterPath="$PROJECT_DIR$/clients.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/conexion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/events.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/window.py" beforeDir="false" afterPath="$PROJECT_DIR$/window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/window.ui" beforeDir="false" afterPath="$PROJECT_DIR$/window.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windowaviso.py" beforeDir="false" afterPath="$PROJECT_DIR$/windowaviso.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windowaviso.ui" beforeDir="false" afterPath="$PROJECT_DIR$/windowaviso.ui" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1ytkUbi45OiqXTUD9MapvXFVOAf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pythonProject2/venv/Scripts/pyuic5.exe" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\a20adrianvp\PycharmProjects\vidalperez\img" />
+      <recent name="C:\Users\a20adrianvp\PycharmProjects\vidalperez" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="vidalperez" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="vidalperez" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\a20adrianvp\AppData\Local\Programs\Python\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="window" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="vidalperez" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/window.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.window" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.window" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="643e68a1-049a-4b32-a501-62dedd2d64d3" name="Changes" comment="" />
+      <created>1633078294216</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633078294216</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Módulo Clientes">
+      <created>1633431095116</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1633431095116</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Módulo Clientes&#10;con ventana de aviso para salir">
+      <created>1633504805028</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1633504805028</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Clients-&gt;DNI">
+      <created>1633506555645</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1633506555645</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Validar DNI funcionando">
+      <created>1633608276177</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1633608276177</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Validar DNI funcionando">
+      <created>1633609219465</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1633609219465</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Validar DNI funcionando">
+      <created>1633695461265</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1633695461265</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Calendario Funcionando&#10;Letras Capitales funcionando">
+      <created>1634291859332</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1634291859332</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Calendario Funcionando&#10;Letras Capitales funcionando">
+      <created>1634293120215</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1634293120215</updated>
+    </task>
+    <task id="LOCAL-00009" summary="tabla y limpiador de formulario clientes funcionando">
+      <created>1634640583435</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1634640583435</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Si dni no valido no guarda">
+      <created>1634716165321</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1634716165321</updated>
+    </task>
+    <task id="LOCAL-00011" summary="conexion con bbdd">
+      <created>1635245858836</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1635245858836</updated>
+    </task>
+    <task id="LOCAL-00012" summary="combo muni no funcionando">
+      <created>1636032558531</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1636032558531</updated>
+    </task>
+    <task id="LOCAL-00013" summary="combo muni no funcionando">
+      <created>1636722458711</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1636722458711</updated>
+    </task>
+    <task id="LOCAL-00014" summary="combo muni no funcionandodfg">
+      <created>1636722487517</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1636722487517</updated>
+    </task>
+    <task id="LOCAL-00015" summary="barra de herramientas y boton imprimir funciondo&#10;&#10;municpios no funciona&#10;cargar sexo no funciona">
+      <created>1636723575222</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1636723575222</updated>
+    </task>
+    <task id="LOCAL-00016" summary="barra de herramientas y boton imprimir funciondo&#10;&#10;municpios no funciona&#10;cargar sexo no funciona">
+      <created>1637320104341</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1637320104341</updated>
+    </task>
+    <task id="LOCAL-00017" summary="barra de herramientas y boton imprimir funciondo&#10;&#10;municpios no funciona&#10;cargar sexo no funciona">
+      <created>1637322108007</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1637322108007</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Módulo Clientes" />
+    <MESSAGE value="Módulo Clientes&#10;con ventana de aviso para salir" />
+    <MESSAGE value="Clients-&gt;DNI" />
+    <MESSAGE value="Validar DNI funcionando" />
+    <MESSAGE value="Calendario Funcionando&#10;Letras Capitales funcionando" />
+    <MESSAGE value="tabla y limpiador de formulario clientes funcionando" />
+    <MESSAGE value="Si dni no valido no guarda" />
+    <MESSAGE value="conexion con bbdd" />
+    <MESSAGE value="combo muni no funcionando" />
+    <MESSAGE value="combo muni no funcionandodfg" />
+    <MESSAGE value="barra de herramientas y boton imprimir funciondo&#10;&#10;municpios no funciona&#10;cargar sexo no funciona" />
+    <option name="LAST_COMMIT_MESSAGE" value="barra de herramientas y boton imprimir funciondo&#10;&#10;municpios no funciona&#10;cargar sexo no funciona" />
+  </component>
+</project>
