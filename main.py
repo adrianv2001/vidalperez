@@ -67,6 +67,8 @@ class Main(QtWidgets.QMainWindow):
 
         var.ui.btnPDFCli.clicked.connect(informes.Informes.listadoClientes) #boton report cli
         var.ui.btnReprPro.clicked.connect(informes.Informes.listadoProductos)
+
+        var.ui.btnImprimirFactura.clicked.connect(informes.Informes.factura)
         '''
         Eventos de la barra de menus y de herramientas
         '''
@@ -86,6 +88,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtApel.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtNome.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtDir.editingFinished.connect(clients.Clientes.letracapital)
+        var.txtCantidad = QtWidgets.QLineEdit()
+        # var.txtCantidad.editingFinished.connect(invoice.Facturas.totalLineaVenta)
 
         '''
         Eventos QTabWidget
@@ -93,7 +97,7 @@ class Main(QtWidgets.QMainWindow):
         events.Eventos.resizeTablaCli(self)
         events.Eventos.resizeTablaArt(self)
         events.Eventos.resizeTablaFac(self)
-        events.Eventos.resizeTablaVentas(self)
+        events.Eventos.resizeTablaVen(self)
         var.ui.tabClientes.clicked.connect(clients.Clientes.cargaCli)
         var.ui.tabClientes.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         #Examen
@@ -102,8 +106,8 @@ class Main(QtWidgets.QMainWindow):
 
         var.ui.tabFacturas.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
         var.ui.tabVentas.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
-        var.ui.tabFacturas.clicked.connect(invoice.Facturas.cargaFac)
-        invoice.Facturas.cargarLineaVenta(self)
+        var.ui.tabFacturas.clicked.connect(conexion.Conexion.cargaFac)
+        #invoice.Facturas.cargarLineaVenta(0)
         '''
         Base de Datos
         '''
@@ -119,7 +123,8 @@ class Main(QtWidgets.QMainWindow):
 
         conexion.Conexion.cargarProv(self)
         var.ui.cmbProv.currentIndexChanged.connect(clients.Clientes.cargaMun)
-
+        conexion.Conexion.cargarCmbProducto(self)
+        #var.cmbProducto.currentIndexChanged.connect(invoice.Facturas.procesoVenta)
 
         '''
         Barra de estado

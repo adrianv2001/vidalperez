@@ -6,6 +6,9 @@ locale.setlocale( locale.LC_ALL, '' )
 
 class Productos():
 
+
+
+
     def altaPro(self):
         try:
             registro = []

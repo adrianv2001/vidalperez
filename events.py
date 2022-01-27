@@ -161,12 +161,14 @@ class Eventos():
         except Exception as error:
             print("Error en modulo resizeTablaFac", error)
 
-
-    def resizeTablaVentas(self):
+    def resizeTablaVen(self):
         try:
             header = var.ui.tabVentas.horizontalHeader()
             for i in range(5):
-                header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
+                if i == 1 or i == 3:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
 
         except Exception as error:
-            print("Error en modulo resizeTablaCLi", error)
+            print('Error al redimensionar tabla clientes', error)
+

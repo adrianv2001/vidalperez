@@ -18,6 +18,9 @@ global copia
 global cv
 global btnfacdel
 global cmbProducto
+global txtCantidad
+global precio
+global codpro
 '''
 otras variables
 '''

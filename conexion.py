@@ -2,9 +2,11 @@ import datetime
 
 import xlwt as xlwt
 from PyQt5 import QtSql, QtWidgets, Qt, QtCore, QtGui
-from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QDialog
 from datetime import *
 import locale
+
+import invoice
 
 locale.setlocale(locale.LC_ALL, '')
 import clients
@@ -61,7 +63,6 @@ class Conexion():
                 msg.setText(query.lastError().text())
                 msg.exec()
 
-            print(newCli)
         except Exception as error:
             print('Problemas en Alta Cliente BBDD ', error)
 
@@ -471,29 +472,157 @@ class Conexion():
 
     def bajaFac(self):
         try:
-            confirma = QtWidgets.QMessageBox.accept
+            #confirma = QDialog.
 
             numfac = var.ui.lblnumFac.text()
             con = str('Desea eliminar la factura '+ numfac+ '?')
+           # confirma
             #confirma.setText(con)
             #confirma.setWindowTitle('Eliminar')
-            confirma.setStandardButtons(QMessageBox.Ok,QMessageBox.Cancel)
-            if confirma.exec():
-                query = QtSql.QSqlQuery()
-                query.prepare('delete from facturas where codfac = :numfac')
-                query.bindValue(':numfac', numfac)
-                msg = QtWidgets.QMessageBox()
-                if query.exec_():
-
+            #confirma.setStandardButtons(QMessageBox.Ok,QMessageBox.Cancel)
+            #if confirma.accept():
+            query = QtSql.QSqlQuery()
+            query.prepare('delete from facturas where codfac = :numfac')
+            query.bindValue(':numfac', numfac)
+            msg = QtWidgets.QMessageBox()
+            if query.exec_():
                     msg.setText('Factura eliminada correctamente')
                     msg.setWindowTitle('Eliminacion Correcta')
                     msg.setIcon(QtWidgets.QMessageBox.Information)
                     msg.exec()
                     Conexion.cargarTabFacturas(self)
-                else:
+            else:
                     msg.setWindowTitle('Aviso')
                     msg.setIcon(QtWidgets.QMessageBox.Warning)
                     msg.setText(query.lastError().text())
                     msg.exec()
         except Exception as error:
             print('Fallo en bajaFac en conexion', error)
+
+    def cargarCmbProducto(self):
+        try:
+            var.cmbProducto.clear()
+            query = QtSql.QSqlQuery()
+            var.cmbProducto.addItem('')
+            query.prepare('select nombre from articulos order by nombre')
+            if query.exec_():
+                while query.next():
+                    var.cmbProducto.addItem(str(query.value(0)))
+        except Exception as error:
+            print('Fallo en cargarCmbProducto en conexion', error)
+
+
+    def obtenerCodPrecio(articulo):
+        try:
+            dato = []
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo, precio from articulos where nombre = :nombre')
+            query.bindValue(':nombre',articulo)
+            if query.exec_():
+                while query.next():
+                    dato.append(int(query.value(0)))
+                    dato.append(str(query.value(1)))
+                    var.codpro = dato[0]
+            return dato
+
+        except Exception as error:
+            print('Fallo en obtenerCodPrecio en conexion', error)
+
+
+    def cargarVenta(venta):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('insert into ventas(codfac,codpro,precio,cantidad)values(:codfac,:codpro,:precio,:cantidad)')
+            query.bindValue(':codfac', int(venta[0]))
+            query.bindValue(':codpro', int(venta[1]))
+            query.bindValue(':precio', int(venta[2]))
+            query.bindValue(':cantidad', int(venta[3]))
+            if query.exec_():
+                var.ui.lblVenta.setText('Venta realizada')
+                var.ui.lblVenta.setStyleSheet('QLabel {color:black;}')
+            else:
+                var.ui.lblVenta.setText('Error en Venta')
+                var.ui.lblVenta.setStyleSheet('QLabel {color:red;}')
+        except Exception as error:
+            print('Fallo en cargarVenta en conexion', error)
+
+    def buscaCodFac(self):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare('select codigo from facturas order by codigo desc limit 1')
+            if query.exec_():
+                while query.next():
+                    dato = query.value(0)
+            return dato
+        except Exception as error:
+            print('Fallo en buscaCodFac en conexion', error)
+
+    def cargaFac(self):
+        try:
+            fila = var.ui.tabFacturas.selectedItems()  # seleccionamos la fila
+            datos = [var.ui.lblnumFac, var.ui.txtFechaFac]
+            if fila:  # cargamos en row todos los datos de la fila
+                row = [dato.text() for dato in fila]
+            for i, dato in enumerate(datos):
+                dato.setText(row[i])
+            dni = Conexion.buscaDNIFac(row[0])
+            var.ui.txtDNIFac.setText(dni)
+            registro = Conexion.buscaCliFac(dni)
+            if registro:
+                nombre = registro[0] + ', ' + registro[1]
+                var.ui.lblCliente.setText(nombre)
+            invoice.Facturas.cargarLineaVenta(self)
+            Conexion.cargarLineasVenta(str(var.ui.lblnumFac.text()))
+
+        except Exception as error:
+            print('error alta en factura', error)
+
+    def cargarLineasVenta(codfac):
+        try:
+            suma = 0.0
+            sumaT = 0.0
+            #var.ui.tabVentas.clearContents()
+            index = 1
+
+            linea = []
+            query = QtSql.QSqlQuery()
+            query.prepare('select codventa,codpro,precio,cantidad from ventas where codfac = :codfac')
+            query.bindValue(':codfac', int(codfac))
+            if query.exec_():
+                while query.next():
+                    codventa = query.value(0)
+                    codpro = query.value(1)
+                    precio = query.value(2)
+                    cantidad = query.value(3)
+                    producto = Conexion.nombrePro(codpro)
+                    suma = round((float(precio)*float(cantidad)),2)
+                    sumaT = sumaT + suma
+                    print(precio)
+                    var.ui.tabVentas.setRowCount(index + 1)
+                    var.ui.tabVentas.setItem(index, 0, QtWidgets.QTableWidgetItem(str(codventa)))
+                    var.ui.tabVentas.item(index, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                    var.ui.tabVentas.setItem(index, 1, QtWidgets.QTableWidgetItem(producto))
+                    var.ui.tabVentas.setItem(index, 2, QtWidgets.QTableWidgetItem(str(precio)+' €'))
+                    var.ui.tabVentas.setItem(index, 3, QtWidgets.QTableWidgetItem(str(cantidad)))
+                    var.ui.tabVentas.setItem(index, 4, QtWidgets.QTableWidgetItem(str(suma)+' €'))
+                    index = index + 1
+            var.ui.lblSub.setText((str(round(sumaT,2))+' €'))
+            iva = float(sumaT * 0.21)
+            total = iva + sumaT
+            var.ui.lblIVA.setText((str(round(iva,2))+' €'))
+            var.ui.lblTotal.setText((str(round(total, 2))+ ' €'))
+
+        except Exception as error:
+            print('error cargar las lines de factura', error)
+
+
+    def nombrePro(cod):
+        nombre = ''
+
+        query = QtSql.QSqlQuery()
+        query.prepare('select nombre from articulos where codigo=:codigo')
+        query.bindValue(':codigo',cod)
+        if query.exec_():
+            while query.next():
+                nombre = query.value(0)
+        return nombre
