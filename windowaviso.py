@@ -13,6 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Aviso(object):
     def setupUi(self, Aviso):
+        """
+        Generado por QtDesigner, correspondiente a la ventana de SALIR
+        :param Aviso:
+        :type Aviso:
+        """
         Aviso.setObjectName("Aviso")
         Aviso.setWindowModality(QtCore.Qt.ApplicationModal)
         Aviso.resize(253, 235)

@@ -1,19 +1,16 @@
-'''
+import traceback
 
-Funciones gestión clientes
-
-'''
-import locale
-
-import conexion
-import var
+import conexion, var
 from window import *
-
 
 class Clientes():
     dnivalido = False
 
     def validarDNI():
+        """
+        Método que valida el DNI del cliente
+        :rtype: object
+        """
         try:
             dni = var.ui.txtDni.text()
             var.ui.txtDni.setText(dni.upper())
@@ -42,9 +39,14 @@ class Clientes():
                 var.ui.lblValidoDNI.setText('X')
 
         except Exception as error:
-            print('Error en módulo validarDNI', error)
+            print('Error en módulo validarDNI',error, traceback.format_exc())
 
     def cargarFecha(qDate):
+        """
+
+        Método que carga la fecha en el panel de clientes
+
+        """
         try:
             data = (str(qDate.day()).zfill(2)+'/'+str(qDate.month()).zfill(2)+'/'+str(qDate.year()))
             #data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
@@ -57,9 +59,14 @@ class Clientes():
             var.dlgcalendar.hide()
 
         except Exception as error:
-            print('Error cargar fecha en txtFecha', error)
+            print('Error cargar fecha en txtFecha',error, traceback.format_exc())
 
     def letracapital():
+        """
+
+        Método que se llama para poner letra capital en el nombre y apellidos del cliente
+
+        """
         try:
             apel = var.ui.txtApel.text()
             var.ui.txtApel.setText(apel.title())
@@ -68,9 +75,14 @@ class Clientes():
             dir = var.ui.txtDir.text()
             var.ui.txtDir.setText(dir.title())
         except Exception as error:
-            print('Error en modulo mayusculas', error)
+            print('Error en modulo mayusculas',error, traceback.format_exc())
 
     def guardaCli(self):
+        """
+
+        Método que recupera los datos del cliente del panel de clientes y lo prepara para la insercion en la bd
+
+        """
         try:
             if Clientes.dnivalido:  # es lo mismo que Clientes.dnivalido == True
                 # preparamos el registro
@@ -129,9 +141,15 @@ class Clientes():
                 msg.setIcon(QtWidgets.QMessageBox.Warning)
                 msg.exec()
         except Exception as error:
-            print('Error en modulo guardar clientes', error)
+            print('Error en modulo guardar clientes',error, traceback.format_exc())
+
 
     def limpiarFormCli(self):
+        """
+
+        Método que limpia el formulario del panel clientes
+
+        """
         try:
             var.ui.txtDni.setStyleSheet('QLineEdit {background-color: white;}')
             var.ui.lblValidoDNI.setStyleSheet('QLabel {color: white;}')
@@ -153,9 +171,14 @@ class Clientes():
             var.ui.cmbMun.setCurrentIndex(0)
             #+var.ui.spinEnvio.setValue(0)
         except Exception as error:
-            print('Error en modulo limpiar formulario clientes, ', error)
+            print('Error en modulo limpiar formulario clientes, ',error, traceback.format_exc())
 
     def cargaCli(self):
+        """
+
+        Método que se llama cuando se selecciona un cliente en el panel clientes, carga sus datos en el formulario
+
+        """
         try:
             # carga los datos del cliente al seleccionar en tabla
             Clientes.limpiarFormCli(self)
@@ -191,12 +214,18 @@ class Clientes():
                 var.ui.rbtHom.setChecked(True)
             if str(registro[3]) == 'Mujer':
                 var.ui.rbtFem.setChecked(True)
-            var.ui.spinEnvio.setValue(registro[4])
+            if registro[4]:
+                var.ui.spinEnvio.setValue(registro[4])
 
         except Exception as error:
-            print('Error en cargar datos de un cliente', error)
+            print('Error en cargar datos de un cliente',error, traceback.format_exc())
 
     def modifCli(self):
+        """
+
+        Método que obtiene datos del formulario de clientes, y los guarda en un "cliente" auxiliar, para la modificacion. Este cliente se lo pasa al método  modificar cliente de conexion
+
+        """
         try:
             modcliente = []
 
@@ -234,14 +263,24 @@ class Clientes():
             print("error modificando cliente" + e)
 
     def bajaCli(self):
+        """
+
+        Método que recoje el dni de un cliente y se lo pasa al métod correspondiente de conexion para darlo de baja
+
+        """
         try:
             dni = var.ui.txtDni.text()
             conexion.Conexion.bajaCli(dni)
-            conexion.Conexion.cargarTabCli(self)
+            conexion.Conexion.cargarTabCli()
         except Exception as error:
             print('error en modulo baja cli de clientes')
 
     def cargaProv():
+        """
+
+        Método que limpia el combobox de provincias y carga las provincias en el combobox del panel clientes
+
+        """
         try:
             var.ui.cmbProv.clear()
             prov = conexion.Conexion.cargarProv()
@@ -249,16 +288,26 @@ class Clientes():
             #for i in prov:
              #   var.ui.cmbProv.addItem(i)
         except Exception as error:
-            print('Error en módulo cargar provincias', error)
+            print('Error en módulo cargar provincias',error, traceback.format_exc())
 
     def cargaMun(self):
+        """
+
+         Método que limpia el combobox de municipios y carga los municipios en el combobox del panel clientes
+
+        """
         try:
             var.ui.cmbMun.clear()
             mun = conexion.Conexion.cargarMun(self)
         except Exception as error:
-            print('Error en el módulo cargar municipio, ', error)
+            print('Error en el módulo cargar municipio, ',error, traceback.format_exc())
 
     def envio(self):
+        """
+
+        Método que dependiendo del valor del spin de envio, le indica al usuario el método de envio escogido
+
+        """
         try:
             op = var.ui.spinEnvio.value()
             if op == 0:
@@ -270,4 +319,4 @@ class Clientes():
             if op == 3:
                 var.ui.lblEnvio.setText("Envío Interncional")
         except Exception as error:
-            print('Error en el módulo envio en clients, ', error)
+            print('Error en el módulo envio en clients, ',error, traceback.format_exc())

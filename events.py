@@ -1,26 +1,15 @@
-'''
-Fichero de eventos generales
-'''
-import os.path
-import shutil
-import sys
-import zipfile
+import os.path, shutil, sys, zipfile, xlrd, conexion, var
+import traceback
 
-import xlrd as xlrd
 from PyQt5.QtWidgets import QMessageBox
-
-import conexion
 from window import *
 from datetime import date, datetime
-from zipfile import ZipFile
 from PyQt5 import QtPrintSupport
-import var
 
 
 class Eventos():
-    SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
 
-    def Salir(self):
+    def salir(self):
         try:
             var.dlgaviso.show()
             if var.dlgaviso.exec():
@@ -28,34 +17,24 @@ class Eventos():
             else:
                 var.dlgaviso.hide()
         except Exception as error:
-            print('Error en módulo salir ', error)
+            print('Error en módulo salir ',error, traceback.format_exc())
 
     def abrircal(self):
         try:
             var.dlgcalendar.show()
         except Exception as error:
-            print('Error en modulo abrirCal, ', error)
-
-    def resizeTablaCli(self):
-        try:
-            header = var.ui.tabClientes.horizontalHeader()
-            for i in range(5):
-                header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
-                if i == 0 or i == 3:
-                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
-        except Exception as error:
-            print("Error en modulo resizeTablaCLi", error)
+            print('Error en modulo abrirCal, ',error, traceback.format_exc())
 
     def Abrir(self):
         try:
             var.dlgabrir.show()
         except Exception as error:
-            print("Error en modulo abrir", error)
+            print("Error en modulo abrir",error, traceback.format_exc())
 
     def crearBackup(self):
         try:
             fecha = datetime.today()
-            fecha = fecha.strftime('%YY.%m.%d.%H.%M.%S')
+            fecha = fecha.strftime('%Y.%m.%d.%H.%M.%S')
             var.copia = (str(fecha) + '_backup.zip')
             option = QtWidgets.QFileDialog.Options()
             directorio, filename = var.dlgabrir.getSaveFileName(None, 'Guardar Copia', var.copia, '.zip',
@@ -66,7 +45,7 @@ class Eventos():
                 fichzip.close()
                 shutil.move(str(var.copia), str(directorio))
         except Exception as error:
-            print('Error crear backup', error)
+            print('Error crear backup',error, traceback.format_exc())
 
     def restaurarBackup(self):
         try:
@@ -83,7 +62,7 @@ class Eventos():
             conexion.Conexion.cargarTabCli(self)
 
         except Exception as error:
-            print('Error Restaurar backup', error)
+            print('Error Restaurar backup',error, traceback.format_exc())
 
     def Imprimir(self):
         try:
@@ -92,22 +71,17 @@ class Eventos():
             if printDialog.exec():
                 printDialog.show()
         except Exception as error:
-            print('Error Imprimir ', error)
-
-
+            print('Error Imprimir ',error, traceback.format_exc())
 
     def ImportarExcel(self):
 
         try:
-
             option = QtWidgets.QFileDialog.Options()
             filename = var.dlgabrir.getOpenFileName(None, 'Importar archivo .xls', '', '*.xls;;All Files',
                                                     options=option)
             if var.dlgabrir.Accepted and filename != '':
                 wb = xlrd.open_workbook(filename[0])
                 sheet = wb.sheet_by_index(0)
-                # print(sheet.ncols)
-                # print(sheet.nrows)
                 COL_FECHA_ALTA = 1
                 COL_MUNICIPIO = 5
                 for row in range(1, sheet.nrows):
@@ -117,21 +91,18 @@ class Eventos():
                         if col == COL_FECHA_ALTA or col == COL_MUNICIPIO:
                             cliente.append('')
                         cliente.append(sheet.cell_value(row, col))
-                    cliente.append('')  # para pago
+                    cliente.append('')
+                    cliente.append('')
+                    print(cliente)# para pago
                     conexion.Conexion.altaCli(cliente,False)
                 conexion.Conexion.cargarTabCli(self)
 
         except Exception as error:
-            print('Error importExcel ', error)
-
-
-
-
+            print('Error importExcel ',error, traceback.format_exc())
 
     def ExportarDatos(self):
         try:
             conexion.Conexion.exportExcel(self)
-
             msgBox = QMessageBox()
             msgBox.setIcon(QtWidgets.QMessageBox.Information)
             msgBox.setText("Datos exportados con éxito.")
@@ -140,9 +111,17 @@ class Eventos():
             msgBox.exec()
 
         except Exception as error:
-            print('Error en evento exportar datos ', error)
+            print('Error en evento exportar datos ',error, traceback.format_exc())
 
-#Examen
+    def resizeTablaCli(self):
+        try:
+            header = var.ui.tabClientes.horizontalHeader()
+            for i in range(5):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
+                if i == 0 or i == 3:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
+        except Exception as error:
+            print("Error en modulo resizeTablaCLi",error, traceback.format_exc())
 
     def resizeTablaArt(self):
         try:
@@ -150,7 +129,7 @@ class Eventos():
             for i in range(3):
                 header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
         except Exception as error:
-            print("Error en modulo resizeTablaArt", error)
+            print("Error en modulo resizeTablaArt",error, traceback.format_exc())
 
     def resizeTablaFac(self):
         try:
@@ -159,7 +138,7 @@ class Eventos():
                 header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
 
         except Exception as error:
-            print("Error en modulo resizeTablaFac", error)
+            print("Error en modulo resizeTablaFac",error, traceback.format_exc())
 
     def resizeTablaVen(self):
         try:
@@ -170,5 +149,4 @@ class Eventos():
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeToContents)
 
         except Exception as error:
-            print('Error al redimensionar tabla clientes', error)
-
+            print('Error al redimensionar tabla clientes',error, traceback.format_exc())

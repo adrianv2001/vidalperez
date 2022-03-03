@@ -1,17 +1,8 @@
-# This is a sample Python script.
-import sys, var
-
-import invoice
-import informes
-import articulos
-import clients
-import conexion
-import events
+import sys, var,invoice, informes, articulos,clients,conexion,events,locale
 from window import *
 from windowaviso import *
 from windowcal import *
 from datetime import *
-import locale
 locale.setlocale(locale.LC_ALL,'es-ES')
 
 class FileDialogAbrir(QtWidgets.QFileDialog):
@@ -43,10 +34,12 @@ class Main(QtWidgets.QMainWindow):
         super(Main, self).__init__()
         var.ui = Ui_MainWindow()
         var.ui.setupUi(self)
+
+        conexion.Conexion.create_DB(var.filedb)
+
         '''
         Eventos de boton
         '''
-        #var.ui.btnSalir.clicked.connect(events.Eventos.Salir)
         var.ui.btnCalendar.clicked.connect(events.Eventos.abrircal)
         var.ui.btnGrabaCli.clicked.connect(clients.Clientes.guardaCli)
         var.ui.btnLimpiaCli.clicked.connect(clients.Clientes.limpiarFormCli)
@@ -69,10 +62,11 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnReprPro.clicked.connect(informes.Informes.listadoProductos)
 
         var.ui.btnImprimirFactura.clicked.connect(informes.Informes.factura)
+        var.ui.btnBorrarVenta.clicked.connect(conexion.Conexion.borraVenta)
         '''
         Eventos de la barra de menus y de herramientas
         '''
-        var.ui.actionSalir.triggered.connect(events.Eventos.Salir)
+        var.ui.actionSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionAbrir.triggered.connect(events.Eventos.Abrir)
         var.ui.actionCrear_Backup.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_BBDD.triggered.connect(events.Eventos.restaurarBackup)
@@ -89,7 +83,7 @@ class Main(QtWidgets.QMainWindow):
         var.ui.txtNome.editingFinished.connect(clients.Clientes.letracapital)
         var.ui.txtDir.editingFinished.connect(clients.Clientes.letracapital)
         var.txtCantidad = QtWidgets.QLineEdit()
-        # var.txtCantidad.editingFinished.connect(invoice.Facturas.totalLineaVenta)
+        var.txtCantidad.returnPressed.connect(invoice.Facturas.totalLineaVenta)
 
         '''
         Eventos QTabWidget
@@ -114,7 +108,7 @@ class Main(QtWidgets.QMainWindow):
         conexion.Conexion.db_connect(var.filedb)
         conexion.Conexion.cargarTabCli(self)
         #Examen
-        conexion.Conexion.cargarTabPro(self)
+        conexion.Conexion.cargarTabPro()
         conexion.Conexion.cargarTabFacturas(self)
 
         '''
@@ -138,7 +132,7 @@ class Main(QtWidgets.QMainWindow):
 
         '''
         Eventos menu herramientas'''
-        var.ui.actionactbarSalir.triggered.connect(events.Eventos.Salir)
+        var.ui.actionactbarSalir.triggered.connect(events.Eventos.salir)
         var.ui.actionbarAbrirCarpeta.triggered.connect(events.Eventos.Abrir)
         var.ui.actionCrear_Backup_2.triggered.connect(events.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(events.Eventos.restaurarBackup)

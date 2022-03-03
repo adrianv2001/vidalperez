@@ -13,6 +13,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_windowcal(object):
     def setupUi(self, windowcal):
+        """
+
+        Generado por QtDesigner, para la ventana de calendario
+        :param interfaz gráfica:
+        :type windowcal:
+
+        """
         windowcal.setObjectName("windowcal")
         windowcal.resize(311, 182)
         icon = QtGui.QIcon()

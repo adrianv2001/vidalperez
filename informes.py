@@ -1,4 +1,6 @@
 import os, var
+import traceback
+
 import conexion
 from PyQt5 import QtSql
 from datetime import datetime
@@ -7,12 +9,17 @@ from reportlab.pdfgen import canvas
 
 class Informes():
     def listadoProductos(self):
+        """
+
+        Método que genera un pdf con el listado de los productos
+
+        """
         try:
             # se crea el lienzo
             var.cv = canvas.Canvas('informes/listadoproductos.pdf')
             var.cv.setTitle('Listado Productos')
             var.cv.setAuthor('Departamento de Administracion')
-            Informes.cabecera()
+            # Informes.cabecera()
 
             # Se guardan los cambios
 
@@ -38,9 +45,8 @@ class Informes():
                 j = 655
                 while query.next():
                     if j <= 80:
-                        #var.cv.drawString(440,30,'Página Siguiente...')
                         var.cv.showPage()
-                        Informes.cabecera()
+                        # Informes.cabecera()
                         Informes.pie(textotitulo)
                         var.cv.setFont('Helvetica-Bold', size=9)
                         var.cv.drawString(255, 690, textotitulo)  # Dibuja el titulo
@@ -59,22 +65,28 @@ class Informes():
 
             cont = 0
             for file in os.listdir(rootPath):
-                if file.endswith('.pdf'):
+                if file.endswith('listadoproductos.pdf'):
                     os.startfile('%s/%s' % (rootPath, file))
                 cont = cont + 1
 
             var.cv.save()
         except Exception as error:
-            print('Error en listar clientes, en informes', error)
+            print('Error en listar clientes, en informes',error, traceback.format_exc())
+
     # Se va a crear un listado en pdf de todos los clientes
     def listadoClientes(self):
+        """
+
+        Método que genera un pdf con el listado de los clientes
+
+        """
         try:
 
             # se crea el lienzo
             var.cv = canvas.Canvas('informes/listadoclientes.pdf')
             var.cv.setTitle('Listado Clientes')
             var.cv.setAuthor('Departamento de Administracion')
-            Informes.cabecera()
+            Informes.cabecera(self)
 
             # Se guardan los cambios
 
@@ -100,9 +112,9 @@ class Informes():
                 j = 655
                 while query.next():
                     if j <= 80:
-                        #var.cv.drawString(440,30,'Página Siguiente...')
+                        # var.cv.drawString(440,30,'Página Siguiente...')
                         var.cv.showPage()
-                        Informes.cabecera()
+                        # Informes.cabecera()
                         Informes.pie(textotitulo)
                         var.cv.setFont('Helvetica-Bold', size=9)
                         var.cv.drawString(255, 690, textotitulo)  # Dibuja el titulo
@@ -121,15 +133,20 @@ class Informes():
 
             cont = 0
             for file in os.listdir(rootPath):
-                if file.endswith('.pdf'):
+                if file.endswith('listadoclientes.pdf'):
                     os.startfile('%s/%s' % (rootPath, file))
                 cont = cont + 1
 
             var.cv.save()
         except Exception as error:
-            print('Error en listar clientes, en informes', error)
+            print('Error en listar clientes, en informes',error, traceback.format_exc())
 
-    def cabecera():
+    def cabecera(self):
+        """
+
+       Método que genera la cabecera de los informes
+
+        """
         try:
             logo = '.\\img\\logo.png'
             var.cv.line(40, 800, 530, 800)
@@ -146,21 +163,25 @@ class Informes():
             var.cv.drawImage(logo, 425, 750)
             var.cv.line(40, 710, 530, 710)
         except Exception as error:
-            print('Error en cabecera informe clientes, en informes', error)
+            print('Error en cabecera informe clientes, en informes',error, traceback.format_exc())
 
     def pie(texto):
+        """
+
+        Método que genera el pie de los informes
+
+        """
         try:
 
             var.cv.line(50, 50, 530, 50)
             fecha = datetime.today()
-            fecha = fecha.strftime('%d.%m%.Y %H.%M.%S')
-            var.cv.setFont('Helvetica', size=6)
-
+            fecha = fecha.strftime('%d.%m.%Y %H.%M.%S')
+            var.cv.setFont('Helvetica', 6)
             var.cv.drawString(70, 40, str(fecha))
             var.cv.drawString(255, 40, str(texto))
-            var.cv.drawString(500, 40, str('Pagina %s' % var.cv.getPageNumber()))
+            var.cv.drawString(500, 40, str('Página %s ' % var.cv.getPageNumber()))
         except Exception as error:
-            print('error creacion de pie informe', error)
+            print('error creacion de pie informe',error, traceback.format_exc())
 
     # def factura(self):
     #     try:
@@ -197,21 +218,42 @@ class Informes():
     #                 suma = suma+(round(query.value(1),2)*round(query.value(2),2))
     #                 total = str((round(query.value(1),2)*round(query.value(2),2))).replace(',','.')+' €'
     #     except Exception as error:
-    #         print('error creacion de pie informe', error)
+    #         print('error creacion de pie informe',error, traceback.format_exc())
 
     def factura(self):
+        """
+
+        Método que genera en pdf, una factura
+
+        """
         try:
             var.cv = canvas.Canvas('informes/factura.pdf')
             var.cv.setTitle('Factura')
             var.cv.setAuthor('Departamento de Administración')
             rootPath = '.\\informes'
-            var.cv.setFont('Helvetica-Bold',size=12)
+            var.cv.setFont('Helvetica-Bold', size=12)
             textotitulo = 'FACTURA'
-            Informes.cabecera(self)
+            # Informes.cabecera(self)
             Informes.pie(textotitulo)
-            codfac = var.ui.lblNumfac.text()
-            var.cv.drawString(260, 694, textotitulo+': '+(str(codfac)))
-            var.cv.line(30, 685, 550, 685)
+            codfac = var.ui.lblnumFac.text()
+            var.cv.drawString(260, 694, textotitulo + ': ' + (str(codfac)))
+            var.cv.line(40, 685, 530, 685)
+            var.cv.setFont('Helvetica-Bold', size=9)
+            var.cv.drawString(270, 785, 'Datos Cliente: ')
+            query1 = QtSql.QSqlQuery()
+            query1.prepare('select direccion,municipio,provincia from clientes where dni = :dni')
+            query1.bindValue(':dni', str(var.ui.txtDNIFac.text()))
+            dir = []
+            if query1.exec_():
+                while query1.next():
+                    dir.append(query1.value(0))
+                    dir.append(query1.value(1))
+                    dir.append(query1.value(2))
+
+            var.cv.drawString(250, 760, 'CIF:' + var.ui.txtDni.text())
+            var.cv.drawString(250, 745, 'Cliente:' + var.ui.txtNome.text())
+            var.cv.drawString(250, 730, 'Direccion:' + str(dir[0]))
+            var.cv.drawString(250, 715, 'Localidad:' + str(dir[1]) + ' (' + str(dir[2]) + ')')
             items = ['Venta', 'Articulo', 'Precio', 'Cantidad', 'Total']
             var.cv.drawString(65, 673, items[0])
             var.cv.drawString(165, 673, items[1])
@@ -219,31 +261,38 @@ class Informes():
             var.cv.drawString(380, 673, items[3])
             var.cv.drawString(490, 673, items[4])
             suma = 0.0
-            query = QtSql.QSqlQuery()
-            query.prepare('select codven,precio,cantidad,codpro from ventas where codfac = :codfac')
-            query.bindValue(':codfac', int(codfac))
-            if query.exec_():
+            query1.finish()
+            try:
+                query2 = QtSql.QSqlQuery()
+                query2.prepare('select codventa, precio, cantidad, codpro from ventas where codfac = :codfac')
+                query2.bindValue(':codfac', codfac)
                 i = 50
                 j = 655
-                while query.next():
-                    codventa = query.value(0)
-                    precio = query.value(1)
-                    cantidad = query.value(2)
-                    nombre = conexion.Conexion.buscaArt(int(query.value(3)))
-                    total = round(precio * cantidad, 2)
-                    suma += total
-                    var.cv.setFont('Helvetica', size=9)
-                    var.cv.drawString(i + 20, j, str(query.value(0)))
-                    var.cv.drawString(i + 100, j, str(nombre))
-                    var.cv.drawString(i + 219, j, str(precio)+'€/kg')
-                    var.cv.drawString(i + 340, j, str(cantidad))
-                    var.cv.drawString(i + 442, j, str(total))
-                    j = j - 20
+
+                if query2.exec_():
+
+                    while query2.next():
+                        codventa = query2.value(0)
+                        precio = query2.value(1)
+                        cantidad = query2.value(2)
+                        nombre = conexion.Conexion.oneArt(int(query2.value(3)))
+                        total = round(precio * cantidad, 2)
+                        suma += total
+                        var.cv.setFont('Helvetica', size=9)
+                        var.cv.drawString(i + 20, j, str(query2.value(0)))
+                        var.cv.drawString(i + 100, j, str(nombre))
+                        var.cv.drawString(i + 219, j, str(precio) + '€/kg')
+                        var.cv.drawString(i + 340, j, str(cantidad))
+                        var.cv.drawString(i + 442, j, str(total))
+                        j = j - 20
+            except Exception as eror:
+                print(eror)
             var.cv.save()
             cont = 0
             for file in os.listdir(rootPath):
                 if file.endswith('factura.pdf'):
                     os.startfile('%s/%s' % (rootPath, file))
                 cont = cont + 1
+
         except Exception as error:
-            print('Error creación informe facturas', error)
+            print('Error creación informe facturas',error, traceback.format_exc())
