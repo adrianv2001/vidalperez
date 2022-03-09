@@ -49,7 +49,6 @@ class Clientes():
         """
         try:
             data = (str(qDate.day()).zfill(2)+'/'+str(qDate.month()).zfill(2)+'/'+str(qDate.year()))
-            #data = ('{0}/{1}/{2}'.format(qDate.day(), qDate.month(), qDate.year()))
 
             if var.ui.tabPrograma.currentIndex()==0:
                var.ui.txtFechAlta.setText(data)
@@ -271,9 +270,9 @@ class Clientes():
         try:
             dni = var.ui.txtDni.text()
             conexion.Conexion.bajaCli(dni)
-            conexion.Conexion.cargarTabCli()
+            conexion.Conexion.cargarTabCli(self)
         except Exception as error:
-            print('error en modulo baja cli de clientes')
+            print('error en modulo baja cli de clientes',error, traceback.format_exc())
 
     def cargaProv():
         """

@@ -8,6 +8,11 @@ locale.setlocale(locale.LC_ALL, '')
 class Productos():
 
     def altaPro(self):
+        '''
+        Módulo que recoje los datos del formulario y llama al método de conexion para dar de alta un producto
+        :return:
+        :rtype:
+        '''
         try:
             registro = []
             producto = var.ui.txtNombreArt.text()
@@ -24,7 +29,6 @@ class Productos():
             precio = str(precio)
 
             registro.append(precio)
-            #print(registro)
             conexion.Conexion.altaArt(registro)
             conexion.Conexion.cargarTabPro()
 
@@ -32,6 +36,11 @@ class Productos():
             print('Error en alta productos: ',error, traceback.format_exc())
 
     def limpiarFormPro(self):
+        '''
+        modulo que limpia el formulario de articulos
+        :return:
+        :rtype:
+        '''
         try:
             var.ui.txtNombreArt.setText('')
             var.ui.txtPrecioArt.setText('')
@@ -39,6 +48,11 @@ class Productos():
             print('Error en Limpiar Tabla Articulos',error, traceback.format_exc())
 
     def cargaArt(self):
+        '''
+        modulo que al seleccionar un producto carga sus datos en el formulario de articulos
+        :return:
+        :rtype:
+        '''
         try:
             Productos.limpiarFormPro(self)
             fila = var.ui.tabArticulos.selectedItems()  # seleccionamos la fila
@@ -52,6 +66,11 @@ class Productos():
             print('En Productos, Error en cargaArt',error, traceback.format_exc())
 
     def modifProducto(self):
+        '''
+        modulo que recoje los datos del formulario y llama al metodo de modificacion de producto de conexion
+        :return:
+        :rtype:
+        '''
         try:
             modpro = []
             tab = var.ui.tabArticulos
@@ -60,7 +79,6 @@ class Productos():
 
             for i in art:
                 modpro.append(i.text())
-            print('modart = ', modpro)
             conexion.Conexion.modifPro(modpro)
             conexion.Conexion.cargarTabPro()
 
@@ -68,6 +86,11 @@ class Productos():
             print("error modificando articulo" + e)
 
     def bajaArt(row):
+        '''
+        modulo que coje el codigo de articulo de
+        :return:
+        :rtype:
+        '''
         try:
             codigo = var.ui.lblCodigo.text()
             conexion.Conexion.bajaPro(codigo)

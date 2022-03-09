@@ -93,7 +93,7 @@ class Eventos():
                         cliente.append(sheet.cell_value(row, col))
                     cliente.append('')
                     cliente.append('')
-                    print(cliente)# para pago
+                    # para pago
                     conexion.Conexion.altaCli(cliente,False)
                 conexion.Conexion.cargarTabCli(self)
 

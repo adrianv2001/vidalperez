@@ -123,11 +123,13 @@ class Conexion():
                 if nuevos:
                     msg.setText('Cliente insertado en la BBDD correctamente')
                     msg.setWindowTitle('Inserción Correcta')
-                    msg.setIcon(QtWidgets.QMessageBox.Ok)
+                    msg.setIcon(QtWidgets.QMessageBox.Information)
+                    msg.setStandardButtons(QMessageBox.Ok)
                     msg.exec()
             else:
                 msg.setWindowTitle('Aviso')
-                msg.setIcon(QtWidgets.QMessageBox.Warning)
+                msg.setIcon(QtWidgets.QMessageBox.Information)
+                msg.setStandardButtons(QMessageBox.Ok)
                 msg.setText(query.lastError().text())
                 msg.exec()
 
@@ -196,7 +198,6 @@ class Conexion():
 
         """
         try:
-            print(dni)
             query = QtSql.QSqlQuery()
             query.prepare('delete from clientes where dni=:dni')
             query.bindValue(':dni', dni)
@@ -251,13 +252,13 @@ class Conexion():
             if query.exec_():
                 while query.next():
                     id = query.value(0)
-                    print(id)
+
             # cargo los municipios con ese código
 
             query1 = QtSql.QSqlQuery()
             query1.prepare('select municipio from municipios where provincia_id = :id')
             query1.bindValue(':id', id)
-            print(id)
+
 
             if query1.exec_():
                 var.ui.cmbMun.addItem('')
@@ -418,7 +419,7 @@ class Conexion():
     def oneArt(codigo):
         """
 
-        Selecciona un producto a tracves de su codigo
+        Selecciona un producto a traves de su codigo
         :return: el producto
         :rtype: Object
 
@@ -655,6 +656,7 @@ class Conexion():
                 msg.setIcon(QtWidgets.QMessageBox.Warning)
                 msg.setText(query.lastError().text())
                 msg.exec()
+
         except Exception as error:
             print('Fallo en bajaFac en conexion', error, traceback.format_exc())
 

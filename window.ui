@@ -38,7 +38,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Articulos&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabClientes_2">
      <attribute name="title">
@@ -108,8 +108,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="img/limpiar.qrc">
-         <normaloff>:/prefijoNuevo/recargas.png</normaloff>:/prefijoNuevo/recargas.png</iconset>
+        <iconset>
+         <normaloff>img/recargas.png</normaloff>img/recargas.png</iconset>
        </property>
       </widget>
       <widget class="QWidget" name="layoutWidget">
@@ -171,7 +171,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>:/prefijoNuevo/fechas.png</normaloff>:/prefijoNuevo/fechas.png</iconset>
+            <normaloff>img/fechas.png</normaloff>img/fechas.png</iconset>
           </property>
          </widget>
         </item>
@@ -825,8 +825,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="img/impresora.qrc">
-         <normaloff>:/prefijoNuevo/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>:/prefijoNuevo/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
+        <iconset>
+         <normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -848,8 +848,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="img/ojo.qrc">
-         <normaloff>:/prefijoNuevo/ojo.png</normaloff>:/prefijoNuevo/ojo.png</iconset>
+        <iconset>
+         <normaloff>img/ojo.png</normaloff>img/ojo.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1033,8 +1033,8 @@ align: center;
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="img/lupa.qrc">
-            <normaloff>:/prefijoNuevo/lupa.png</normaloff>:/prefijoNuevo/lupa.png</iconset>
+           <iconset>
+            <normaloff>img/lupa.png</normaloff>img/lupa.png</iconset>
           </property>
          </widget>
         </item>
@@ -1067,7 +1067,7 @@ align: center;
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>:/prefijoNuevo/fechas.png</normaloff>:/prefijoNuevo/fechas.png</iconset>
+            <normaloff>img/fechas.png</normaloff>img/fechas.png</iconset>
           </property>
          </widget>
         </item>
@@ -1153,8 +1153,8 @@ align: center;
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="img/impresora.qrc">
-         <normaloff>:/prefijoNuevo/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>:/prefijoNuevo/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
+        <iconset>
+         <normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1176,8 +1176,8 @@ align: center;
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="img/borrar.qrc">
-         <normaloff>:/prefijoNuevo/papelera.png</normaloff>:/prefijoNuevo/papelera.png</iconset>
+        <iconset>
+         <normaloff>img/papelera.png</normaloff>img/papelera.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1753,8 +1753,8 @@ align: center;
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="img/limpiar.qrc">
-        <normaloff>:/prefijoNuevo/recargas.png</normaloff>:/prefijoNuevo/recargas.png</iconset>
+       <iconset>
+        <normaloff>img/recargas.png</normaloff>img/recargas.png</iconset>
       </property>
      </widget>
      <widget class="QPushButton" name="btnReprPro">
@@ -1770,8 +1770,8 @@ align: center;
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="img/ojo.qrc">
-        <normaloff>:/prefijoNuevo/ojo.png</normaloff>:/prefijoNuevo/ojo.png</iconset>
+       <iconset>
+        <normaloff>img/ojo.png</normaloff>img/ojo.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1780,7 +1780,7 @@ align: center;
        </size>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -1819,7 +1819,7 @@ align: center;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>31</x>
@@ -1986,8 +1986,8 @@ align: center;
   </action>
   <action name="actionactbarSalir">
    <property name="icon">
-    <iconset resource="img/salir.qrc">
-     <normaloff>:/prefijoNuevo/boton.png</normaloff>:/prefijoNuevo/boton.png</iconset>
+    <iconset>
+     <normaloff>img/boton.png</normaloff>img/boton.png</iconset>
    </property>
    <property name="text">
     <string>actbarSalir</string>
@@ -1998,8 +1998,8 @@ align: center;
   </action>
   <action name="actionbarAbrirCarpeta">
    <property name="icon">
-    <iconset resource="img/abrir.qrc">
-     <normaloff>:/prefijoNuevo/abrir-documento.png</normaloff>:/prefijoNuevo/abrir-documento.png</iconset>
+    <iconset>
+     <normaloff>img/abrir-documento.png</normaloff>img/abrir-documento.png</iconset>
    </property>
    <property name="text">
     <string>barAbrirCarpeta</string>
@@ -2007,8 +2007,8 @@ align: center;
   </action>
   <action name="actionCrear_Backup_2">
    <property name="icon">
-    <iconset resource="img/crearBackup.qrc">
-     <normaloff>:/prefijoNuevo/cloud-backup-up-arrow.png</normaloff>:/prefijoNuevo/cloud-backup-up-arrow.png</iconset>
+    <iconset>
+     <normaloff>img/cloud-backup-up-arrow.png</normaloff>img/cloud-backup-up-arrow.png</iconset>
    </property>
    <property name="text">
     <string>Crear Backup</string>
@@ -2016,8 +2016,8 @@ align: center;
   </action>
   <action name="actionRestaurar_Backup">
    <property name="icon">
-    <iconset resource="img/restaurarBackup.qrc">
-     <normaloff>:/prefijoNuevo/2311512.png</normaloff>:/prefijoNuevo/2311512.png</iconset>
+    <iconset>
+     <normaloff>img/2311512.png</normaloff>img/2311512.png</iconset>
    </property>
    <property name="text">
     <string>Restaurar Backup</string>
@@ -2025,8 +2025,8 @@ align: center;
   </action>
   <action name="actionbarImprimir">
    <property name="icon">
-    <iconset resource="img/impresora.qrc">
-     <normaloff>:/prefijoNuevo/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>:/prefijoNuevo/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
+    <iconset>
+     <normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</normaloff>img/2849806-copy-interface-multimedia-print-printer_107972.png</iconset>
    </property>
    <property name="text">
     <string>Imprimir</string>
@@ -2063,19 +2063,7 @@ align: center;
    </property>
   </action>
  </widget>
- <resources>
-  <include location="img/limpiar.qrc"/>
-  <include location="img/borrar.qrc"/>
-  <include location="img/lupa.qrc"/>
-  <include location="img/calendario.qrc"/>
-  <include location="img/restaurarBackup.qrc"/>
-  <include location="img/salir.qrc"/>
-  <include location="img/aviso.qrc"/>
-  <include location="img/crearBackup.qrc"/>
-  <include location="img/abrir.qrc"/>
-  <include location="img/impresora.qrc"/>
-  <include location="img/ojo.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <buttongroups>
   <buttongroup name="rbtGroupSex"/>

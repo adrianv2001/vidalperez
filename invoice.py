@@ -110,7 +110,6 @@ class Facturas():
             venta.append(int(var.codpro))
             venta.append(float(var.precio))
             venta.append(float(cantidad))
-            print(venta)
             conexion.Conexion.cargarVenta(venta)
         except Exception as error:
             print('error en totalLineaVenta en invoice',error, traceback.format_exc())
@@ -123,7 +122,6 @@ class Facturas():
             var.ui.tabVentas.clearContents()
             var.cmbProducto = QtWidgets.QComboBox()
             var.txtCantidad = QtWidgets.QLineEdit()
-            #var.txtCantidad.editingFinished.connect(Facturas.totalLineaVenta)
             var.cmbProducto.currentIndexChanged.connect(Facturas.procesoVenta)
             Facturas.cargarLineaVenta(self)
             var.ui.lblSubtotal.setText('')

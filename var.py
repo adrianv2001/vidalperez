@@ -24,17 +24,7 @@ global txtCantidad
 global precio
 global codpro
 
-from img import abrir
-from img import aviso
-from img import borrar
-from img import calendario
-from img import crearBackup
-from img import impresora
-from img import limpiar
-from img import lupa
-from img import ojo
-from img import restaurarBackup
-from img import salir
+
 '''
 otras variables
 '''
